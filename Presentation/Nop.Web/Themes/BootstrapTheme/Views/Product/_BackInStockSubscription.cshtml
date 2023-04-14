@@ -1,0 +1,20 @@
+﻿@model ProductDetailsModel
+@if (Model.DisplayBackInStockSubscription)
+{
+    <button type="button" id="back-in-stock-subscribe-@Model.Id" class="btn btn-sm btn-warning subscribe-button my-2">
+        @T("BackInStockSubscriptions.NotifyMeWhenAvailable")
+    </button>
+    <script asp-location="Footer" type="text/javascript">
+        $(document).ready(function () {
+            $("#back-in-stock-subscribe-@Model.Id").click(function (event) {
+                var posting = $.get('@Url.RouteUrl("BackInStockSubscribePopup", new { productId = Model.Id })');
+                posting.done(function (result) {
+                    $('#modal-subscribe').html(result);
+                });
+                $('#subscribe-modal-form').modal('show');
+            });
+        });
+    </script>
+
+
+}

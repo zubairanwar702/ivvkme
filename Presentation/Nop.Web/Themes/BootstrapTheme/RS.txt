@@ -1,0 +1,9 @@
+﻿shoppingcart.headerquantity - {0}
+wishlist.headerquantity - {0}
+homepage.cateogry.button - Explore
+products.description - Description
+home.categories.text - SHOP BY CATEGORY
+shoppingcart.mini.nodatatext - You have no items in your shopping cart.
+privatemessages.totalunread - {0}
+choose.file - Choose file
+newsletter.content - Get the Latest News from Shop

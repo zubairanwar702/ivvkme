@@ -1,0 +1,39 @@
+﻿@model TopMenuModel.CategoryLineModel
+<li class="@(Model.Category.SubCategories.Count() == 0 ? "nav-item": "nav-item dropdown dropright" )">
+    <a class="@(Model.Category.SubCategories.Count() == 0 ? "nav-link": "nav-link dropdown-toggle")" @if (Model.Category.SubCategories.Count() > 0) { <text>id="navbarDropdown-@Model.Category.Id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"</text> } href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">@Model.Category.Name
+        @if (Model.Category.NumberOfProducts.HasValue)
+        {
+            <span>@T("Categories.TotalProducts", Model.Category.NumberOfProducts.Value)</span>
+        }
+    </a>
+    @{
+        //subcategories
+        var subCategories = Model.ResponsiveMobileMenu ?
+            //responsive (all categories)
+            Model.Category.SubCategories :
+            //standard design (only categories with "IncludeInTopMenu")
+            Model.Category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
+
+        var levelClass = "";
+        if (Model.Level == 0)
+        {
+            levelClass = "first-level";
+        }
+        if (subCategories.Count > 0)
+        {
+            <div class="sublist-toggle"></div>
+            <ul class="dropdown-menu @levelClass" aria-labelledby="navbarDropdown-@Model.Category.Id">
+                @foreach (var subCategory in subCategories)
+                {
+                    var categoryLineModel = new TopMenuModel.CategoryLineModel
+                    {
+                        Category = subCategory,
+                        Level = Model.Level + 1,
+                        ResponsiveMobileMenu = Model.ResponsiveMobileMenu
+                    };
+                    @await Html.PartialAsync("_CategoryLine.TopMenu", categoryLineModel)
+                }
+            </ul>
+        }
+    }
+</li>

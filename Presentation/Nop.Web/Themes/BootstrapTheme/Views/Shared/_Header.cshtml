@@ -1,0 +1,44 @@
+﻿<header class="section-header">
+    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderBefore })
+    @*<div class="header-upper">
+            <div class="header-selectors-wrapper">
+                @await Component.InvokeAsync("TaxTypeSelector")
+                @await Component.InvokeAsync("CurrencySelector")
+                @await Component.InvokeAsync("LanguageSelector")
+                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderSelectors })
+            </div>
+            <div class="header-links-wrapper">
+                @await Component.InvokeAsync("HeaderLinks")
+                @await Component.InvokeAsync("FlyoutShoppingCart")
+            </div>
+        </div>*@
+    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderMiddle })
+    @*<div class="header-lower">
+            <div class="header-logo">
+                @await Component.InvokeAsync("Logo")
+            </div>
+            <div class="search-box store-search-box">
+                @await Component.InvokeAsync("SearchBox")
+            </div>
+        </div>*@
+
+    <section class="header-main shadow-sm">
+        <div class="container">
+            <div class="row-sm align-items-center">
+                <div class="col-xl-6-24 col-lg-6-24 col-md-12 col-12 text-sm-left text-center d-inline-flex align-items-center">
+                    <a class="c-button js-offcanvas-trigger d-lg-none" data-offcanvas-trigger="off-canvas-left-push">
+                        <span class="menu-icon"><span></span><span></span><span></span></span>
+                    </a>
+                    @await Component.InvokeAsync("Logo")
+                </div>
+                <div class="col-xl-12-24 col-lg-10-24 col-md-9-24 col-sm-8 col-12 d-lg-block d-none">
+                    @await Component.InvokeAsync("SearchBox")
+                </div> <!-- col.// -->
+                <div class="col-xl-6-24 col-lg-8-24 col-md-10-24 col-sm-12 col-12 d-lg-block d-none">
+                    @await Component.InvokeAsync("HeaderLinks")
+                </div> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- container.// -->
+    </section> <!-- header-main .// -->
+    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderAfter })
+</header>

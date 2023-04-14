@@ -1,0 +1,12 @@
+﻿@using Nop.Services.Helpers
+@inject IDateTimeHelper dateTimeHelper
+<div class="forums-header generalMarginSupporter">
+    <div class="row d-flex justify-content-end">
+        <div class="col-12 col-md-6 current-time">
+            <span class="lnr linearicons-calendar-31 mr-2"></span>@dateTimeHelper.ConvertToUserTime(DateTime.UtcNow).ToString("F")
+        </div>
+        <div class="col-12 col-md-6 ml-auto text-sm-right">
+            <partial name="_SearchBox" />
+        </div>
+    </div>
+</div>

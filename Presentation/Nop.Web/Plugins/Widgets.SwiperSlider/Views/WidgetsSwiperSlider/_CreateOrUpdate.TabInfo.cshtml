@@ -1,0 +1,109 @@
+﻿@model Nop4you.Plugin.Widgets.SwiperSlider.Models.SlideConfigurationModel
+@using Nop.Core.Domain.Catalog;
+@using Nop.Services.Events;
+@using Nop.Web.Framework.UI;
+@using Nop.Web.Framework;
+
+<div class="form-group">
+    <div class="col-md-3">
+        <nop-label asp-for="Publish" />
+    </div>
+    <div class="col-md-9">
+        <nop-editor asp-for="Publish" />
+        <span asp-validation-for="Publish"></span>
+    </div>
+</div>
+
+@(Html.LocalizedEditor<Nop4you.Plugin.Widgets.SwiperSlider.Models.SlideConfigurationModel, Nop4you.Plugin.Widgets.SwiperSlider.Models.SlideLocalizedModel>("slide-localized",
+    @<div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <nop-label asp-for="Locales[item].Header" />
+        </div>
+        <div class="col-md-9">
+            <nop-editor asp-for="Locales[item].Header" asp-template="RichEditor" />
+            <span asp-validation-for="Locales[item].Header"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <nop-label asp-for="Locales[item].Body" />
+        </div>
+        <div class="col-md-9">
+            <nop-editor asp-for="Locales[item].Body" asp-template="RichEditor" />
+            <span asp-validation-for="Locales[item].Body"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <nop-label asp-for="Locales[item].Footer" />
+        </div>
+        <div class="col-md-9">
+            <nop-editor asp-for="Locales[item].Footer" asp-template="RichEditor" />
+            <span asp-validation-for="Locales[item].Footer"></span>
+        </div>
+    </div>
+    <input asp-for="Locales[item].LanguageId" type="hidden" />
+</div>
+    ,
+    @<div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <nop-label asp-for="Header" />
+        </div>
+        <div class="col-md-9">
+            <nop-editor asp-for="Header" asp-template="RichEditor" />
+            <span asp-validation-for="Header"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <nop-label asp-for="Body" />
+        </div>
+        <div class="col-md-9">
+            <nop-editor asp-for="Body" asp-template="RichEditor" />
+            <span asp-validation-for="Body"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            <nop-label asp-for="Footer" />
+        </div>
+        <div class="col-md-9">
+            <nop-editor asp-for="Footer" asp-template="RichEditor" />
+            <span asp-validation-for="Footer"></span>
+        </div>
+    </div>
+</div>
+))
+     <div>
+         <div class="form-group">
+             <div class="col-md-3">
+                 <nop-label asp-for="PictureId" />
+             </div>
+             <div class="col-md-9">
+                 <nop-editor asp-for="PictureId" />
+                 <span asp-validation-for="PictureId"></span>
+             </div>
+         </div>
+
+         <div class="form-group">
+             <div class="col-md-3">
+                 <nop-label asp-for="SlideOrder" />
+             </div>
+             <div class="col-md-9">
+                 <nop-editor asp-for="SlideOrder" />
+                 <span asp-validation-for="SlideOrder"></span>
+             </div>
+         </div>
+         
+
+         <div class="form-group">
+             <div class="col-md-3">
+                 <nop-label asp-for="Caption" />
+             </div>
+             <div class="col-md-9">
+                 <nop-select asp-for="Caption" asp-items="Model.CaptionTypes" />
+             </div>
+         </div>
+     </div>

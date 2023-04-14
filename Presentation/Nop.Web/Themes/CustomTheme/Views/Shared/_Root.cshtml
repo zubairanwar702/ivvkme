@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "_Root.Head";
+}
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.BodyStartHtmlTagAfter })
+@await Html.PartialAsync("_Notifications")
+@await Html.PartialAsync("_JavaScriptDisabledWarning")
+@await Html.PartialAsync("_OldInternetExplorerWarning")
+<main class="c-offcanvas-content-wrap" role="main">
+    @await Html.PartialAsync("_Header2")
+    <script asp-location="Footer">
+        AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+    </script>
+    <div class="container-fluid bg-gray">
+        <div class="container mt-3">
+            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ContentBefore })
+
+            @if (IsSectionDefined("Breadcrumb"))
+            {
+    @RenderSection("Breadcrumb")}
+            <div class="row">
+                @RenderBody()
+            </div>
+            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ContentAfter })
+        </div>
+    </div>
+    @await Component.InvokeAsync("Footer")
+    @await Component.InvokeAsync("EuCookieLaw")
+</main>
+<div class="modal fade" id="terms-of-service-warning-box-modal" tabindex="-1" title="@T("Checkout.TermsOfService")" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @T("Checkout.TermsOfService")
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="lnr linearicons-cross" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>@T("Checkout.TermsOfService.PleaseAccept")</p>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="js-offcanvas-trigger filter-button btn btn-warning d-none" data-offcanvas-trigger="leftSide" href="#leftSide"></a>
+@await Component.InvokeAsync("FlyoutShoppingCart")
+<aside class="js-offcanvas" data-offcanvas-options='{"modifiers":"left,push"}' id="off-canvas-left-push" role="complementary"></aside>
+<aside class="js-offcanvas mobile-filters" data-offcanvas-options='{"modifiers":"left,overlay","modal":true,"resize":true}' id="leftSide" role="complementary"></aside>
+@await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.BodyEndHtmlTagBefore })

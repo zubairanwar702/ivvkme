@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Exchange rate providers",
+  "FriendlyName": "FloatRates exchange rate provider",
+  "SystemName": "CurrencyExchange.FloatRates",
+  "Version": "1.0",
+  "SupportedVersions": [ "4.30" ],
+  "Author": "nopCommerce team",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.ExchangeRate.FloatRatesExchange.dll",
+  "Description": "This plugin allows getting exchange rates from FloatRates.com"
+}

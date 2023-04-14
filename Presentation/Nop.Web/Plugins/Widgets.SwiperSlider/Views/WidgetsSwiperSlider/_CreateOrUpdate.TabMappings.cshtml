@@ -1,0 +1,31 @@
+﻿@model Nop4you.Plugin.Widgets.SwiperSlider.Models.SlideConfigurationModel
+@using Nop.Core.Domain.Catalog;
+@using Nop.Services.Events;
+@using Nop.Web.Framework.UI;
+@using Nop.Web.Framework;
+
+
+<div class="form-group">
+    <div class="col-md-3">
+        <nop-label asp-for="ApplyForHomepage" />
+    </div>
+    <div class="col-md-9">
+        <nop-editor asp-for="ApplyForHomepage"  />
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-3">
+        <nop-label asp-for="CategoryId" />
+    </div>
+    <div class="col-md-9">
+        <nop-select asp-for="CategoryId" asp-items="Model.CategoryIds" />
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-3">
+        <nop-label asp-for="ManufacturerId" />
+    </div>
+    <div class="col-md-9">
+        <nop-select asp-for="ManufacturerId" asp-items="Model.ManufacturerIds" />
+    </div>
+</div>

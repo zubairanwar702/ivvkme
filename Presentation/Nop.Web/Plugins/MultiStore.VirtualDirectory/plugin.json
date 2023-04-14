@@ -1,0 +1,11 @@
+﻿{
+  "Group": "MultiStore",
+  "FriendlyName": "MultiStore Virtual Directory",
+  "SystemName": "MultiStore.VirtualDirectory",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.30" ],
+  "Author": "Mina Elnagar",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.MultiStore.VirtualDirectory.dll",
+  "Description": "This plugin allows to use multi stores in virtual directories"
+}

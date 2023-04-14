@@ -1,0 +1,50 @@
+﻿@using Nop.Web.Framework.UI;
+@using Nop.Core.Infrastructure;
+
+@{
+    Html.AddCssFileParts("~/Plugins/Widgets.QuickFilter/Content/style.css");
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/Plugins/Widgets.QuickFilter/Content/ajaxfilter.manager.js");
+
+}
+
+<script type="text/javascript" asp-location="Footer">
+    $(document).ready(function () {
+
+        $(window).on('popstate', function () {
+            location.reload(true);
+        });
+
+
+        if ($(".product-grid").not(".featured-product-grid").length) {
+            $("<div class='ajax-products'></div>").insertBefore('.product-grid:not(".featured-product-grid")');
+            $('.product-grid:not(".featured-product-grid")').appendTo('.ajax-products');
+        }
+        if ($(".product-list").not(".featured-product-grid").length) {
+            $("<div class='ajax-products'></div>").insertBefore('.product-list:not(".featured-product-grid")');
+            $('.product-list:not(".featured-product-grid")').appendTo('.ajax-products');
+        }
+        $('.pager').appendTo('.ajax-products');
+
+        AjaxFilter.init('@Url.RouteUrl("Plugins.Widgets.QuickFilter.ReloadFilters")');
+
+        $.ajax({
+            cache: false,
+            type: "Post",
+            url: '@Url.RouteUrl("Plugins.Widgets.QuickFilter.LoadFilters")',
+            success: function (response) {
+                $('.' + response.update_section.name).html(response.update_section.html);
+                if(response.update_section.reload == true)
+                {
+                    AjaxFilter.setFilter('reload');
+                }
+            },
+        });
+    });
+</script>
+
+
+<div class="n4you-ajax-filters">
+    <div class="spinner">
+        <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+    </div>
+</div>

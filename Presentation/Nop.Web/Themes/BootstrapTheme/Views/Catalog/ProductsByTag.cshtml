@@ -1,0 +1,70 @@
+﻿@model ProductsByTagModel
+@using Nop.Core.Domain.Seo
+@inject Nop.Core.IWebHelper webHelper
+@inject SeoSettings seoSettings
+@{
+    Layout = "_ColumnsTwo";
+
+    //title
+    Html.AddTitleParts(string.Format(T("PageTitle.ProductsByTag").Text, Model.TagName));
+    //page class
+    Html.AppendPageCssClassParts("html-product-tag-page");
+
+    //canonical URL
+    if (seoSettings.CanonicalUrlsEnabled)
+    {
+        var productsByTagUrl = Url.RouteUrl("ProductsByTag", new { SeName = Model.TagSeName }, webHelper.CurrentRequestProtocol).ToLowerInvariant();
+        Html.AddCanonicalUrlParts(productsByTagUrl, seoSettings.QueryStringInCanonicalUrlsEnabled);
+    }
+}
+<div class="page product-tag-page">
+    <div class="page-title">
+        <h2><strong>@string.Format(T("Products.Tags.ProductsTaggedWith").Text, Model.TagName)</strong></h2>
+    </div>
+    <div class="page-body">
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductsByTagTop, additionalData = Model })
+        @if (Model.Products.Count > 0)
+        {
+            @await Html.PartialAsync("_CatalogSelectors", Model.PagingFilteringContext)
+        }
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductsByTagBeforeProductList, additionalData = Model })
+        @if (Model.Products.Count > 0)
+        {
+            if (Model.PagingFilteringContext.ViewMode == "grid")
+            {
+                <div class="subCategoryList product-grid">
+                    <div class="row-sm">
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 product-container mb-3">
+                                <partial name="_ProductBox" model="product" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row-sm">
+                    @foreach (var product in Model.Products)
+                    {
+                        <div class="col-12 mb-3">
+                            <partial name="_ProductBoxList" model="product" />
+                        </div>
+                    }
+                </div>
+
+            }
+        }
+        @{
+            var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+        }
+        @if (!pager.IsEmpty())
+        {
+            <div class="pager">
+                @pager
+            </div>
+        }
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductsByTagBottom, additionalData = Model })
+    </div>
+</div>

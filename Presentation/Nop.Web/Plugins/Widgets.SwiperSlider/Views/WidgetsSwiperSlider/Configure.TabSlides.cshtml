@@ -1,0 +1,187 @@
+﻿@model Nop4you.Plugin.Widgets.SwiperSlider.Models.ConfigurationModel
+@using Nop.Web.Framework.UI;
+@using Nop.Web.Framework;
+@using Microsoft.AspNetCore.Routing;
+@{ 
+    Html.AppendScriptParts($"~/Plugins/Widgets.SwiperSlider/Content/lib/kendo.grid.js");
+    //Html.AddCssFileParts($"~/Plugins/Widgets.SwiperSlider/Content/lib/kendo.material.min.css");
+    Html.AddCssFileParts($"~/Plugins/Widgets.SwiperSlider/Content/lib/kendo.custom.css");
+    ///Html.AddCssFileParts($"~/Plugins/Widgets.SwiperSlider/Content/lib/kendo.common-material.min.css");
+}
+@using (Html.BeginForm("Configure", "WidgetsSwiperSlider", FormMethod.Post, new { id = "slides-form" }))
+{
+
+
+    <div id="slides-grid"></div>
+
+    <script>
+    $(document).ready(function () {
+        $("#slides-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("List", "Slides"))",
+                        type: "POST",
+                        dataType: "json"
+                    },
+                    update: {
+                        url: "@Html.Raw(Url.Action("SlideUpdate", "Slides"))",
+                        type: "POST",
+                        dataType: "json"
+                    },
+                    destroy: {
+                        url: "@Html.Raw(Url.Action("Delete", "Slides")) ",
+                                            type: "POST",
+                                            dataType: "json"
+                                        }
+                                    },
+                                    schema: {
+                                        data: "Data",
+                                        total: "Total",
+                                        errors: "Errors",
+                                        model: {
+                                            id: "Id",
+                                            fields: {
+                                                PictureUrl: { editable: false, type: "string" },
+                                                Publish: { editable: true, type: "boolean" },
+                                                Homepage: { editable: false, type: "boolean" },
+                                                Category: { editable: false, type: "boolean" },
+                                                Manufacturer: { editable: false, type: "boolean" },
+                                                Id: { editable: false, type: "string" },
+                                                SlideOrder: { editable: true, type: "number" }
+                                            }
+                                        }
+                                    },
+                                    requestEnd: function (e) {
+                                        if (e.type == "update") {
+                                            this.read();
+                                        }
+                                    },
+                                    error: function (e) {
+                                        display_kendoui_grid_error(e);
+                                        // Cancel the changes
+                                        this.cancelChanges();
+                                    },
+                                    serverPaging: true,
+                                    serverFiltering: true,
+                                    serverSorting: true
+                                },
+                                pageable: {
+                                    refresh: true,
+                                    numeric: false,
+                                    previousNext: false,
+                                    info: false
+                                },
+                                editable: {
+                                    confirmation: false,
+                                    mode: "inline"
+                                },
+                                scrollable: false,
+                                columns: [
+                                {
+                                    field: "PictureUrl",
+                                    title: "@T("nop4you.widget.SwiperSlider.Fields.Picture")",
+                                    template: '# if(PictureId) {# <a href="#=PictureUrl#" target="_blank"><img alt="#=PictureId#" src="#=PictureUrl#" width="150" /><a/> #} else {# <i class="fa fa-close false-icon"></i> #} #',
+                                    width: 200
+                                    },
+                                {
+                                    field: "Publish",
+                                    title: "@T("Admin.Configuration.Plugins.Fields.Publish")",
+                                    width: 50,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(Publish) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                },
+                                {
+                                    field: "Homepage",
+                                    title: "@T("Admin.Configuration.Plugins.Fields.Homepage")",
+                                    width: 50,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(ApplyForHomepage) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                },
+                                    {
+                                    field: "Category",
+                                    title: "@T("Admin.Configuration.Plugins.Fields.Category")",
+                                    width: 50,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(CategoryId) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                },
+                                    {
+                                    field: "Manufacturer",
+                                    title: "@T("Admin.Configuration.Plugins.Fields.Manufacturer")",
+                                    width: 50,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '# if(ManufacturerId) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                },
+                                  {
+                                    field: "SlideOrder",
+                                    title: "@T("nop4you.widget.SwiperSlider.Fields.SlideOrder")",
+                                    attributes: { style: "text-align:center" },
+                                    format: "{0:0}",
+                                    width: 100
+                                    },
+                                    {
+                                    field: "Id",
+                                    title: "@T("Admin.Configuration.Plugins.Fields.Configure")",
+                                    width: 100,
+                                    template: "<input type='submit' id=\"edik-slide-#= Id #\" value='@T("Admin.Configuration.Plugins.Fields.Configure")' onclick=\"javascript:OpenWindow('@Url.RouteUrl("Nop4you.Plugins.Widgets.SwiperSlider.Edit", new { id = "" })/#=Id#?sldId=sldRefreshSlides&formId=slides-form', 800, 800, true); return false;\" class='k-button' />",
+                                }, {
+                                    command: [{
+                                        name: "edit",
+                                        text: "@T("Admin.Common.Edit")"
+                                    }, {
+                                        name: "destroy",
+                                        text: "@T("Admin.Common.Delete")"
+                                    }],
+                                    width: 200
+                                }]
+                                });
+        });
+        function display_kendoui_grid_error(e) {
+            if (e.errors) {
+                if ((typeof e.errors) == 'string') {
+                    //single error
+                    //display the message
+                    alert(e.errors);
+                } else {
+                    //array of errors
+                    //source: http://docs.kendoui.com/getting-started/using-kendo-with/aspnet-mvc/helpers/grid/faq#how-do-i-display-model-state-errors?
+                    var message = "The following errors have occurred:";
+                    //create a message containing all errors.
+                    $.each(e.errors, function (key, value) {
+                        if (value.errors) {
+                            message += "\n";
+                            message += value.errors.join("\n");
+                        }
+                    });
+                    //display the message
+                    alert(message);
+                }
+                //ignore empty error
+            } else if (e.errorThrown) {
+                alert('Error happened');
+            }
+        }
+    </script>
+
+
+    <input type="submit" id="sldAddNewSlide" name="sldAddNewSlide" value="@T("nop4you.widget.SwiperSlider.AddNew")" onclick="javascript:OpenWindow('@(Url.RouteUrl("Nop4you.Plugins.Widgets.SwiperSlider.Add", new { sldId = "sldRefreshSlides", formId = "slides-form" }))    ', 800, 800, true); return false;" class="k-button" />
+    <input type="submit" id="sldRefreshSlides" name="sldRefreshSlides" style="display: none" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sldRefreshSlides').click(function () {
+                //refresh grid
+                var optionsGrid = $("#slides-grid");
+                //optionsGrid.data('kendoGrid').ajaxRequest();
+                optionsGrid.data('kendoGrid').dataSource.read();
+                //return false to don't reload a page
+                return false;
+            });
+        });
+    </script>
+
+}

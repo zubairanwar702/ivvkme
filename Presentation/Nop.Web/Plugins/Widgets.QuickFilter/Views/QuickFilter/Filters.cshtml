@@ -1,0 +1,336 @@
+﻿@model Nop.Plugin.Widgets.QuickFilter.Models.PublicInfoModel
+@using Nop.Web.Framework.UI;
+@using Nop.Core.Infrastructure;
+@using Microsoft.AspNetCore.Html;
+
+@{
+    <div class="d-flex flex-nowrap">
+        <input type="button" class="btn-primary btn clearAllfilters" value="@T("Plugin.Widgets.QuickFilter.ClearAll")" />
+        <div class="closeAllFilters btn btn-primary open">@T("Plugin.Widgets.QuickFilter.Toggle")</div>
+    </div>
+}
+
+<form id="ajaxfilter-form" action="">
+    <div class="selectedOptions">
+    </div>
+    <input type="hidden" name="CategoryId" value=@(Model.CategoryId)>
+    <input type="hidden" name="ManufacturerId" value=@(Model.ManufacturerId)>
+    <input type="hidden" name="EnableManufacturersFilter" value="@(Model.EnableManufacturersFilter.ToString())">
+    <input type="hidden" name="EnableVendorsFilter" value="@(Model.EnableVendorsFilter.ToString())">
+    <input type="hidden" name="EnablePriceRangeFilter" value="@(Model.EnablePriceRangeFilter.ToString())">
+    <input type="hidden" name="EnableSpecificationsFilter" value="@(Model.EnableSpecificationsFilter.ToString())">
+    <input type="hidden" name="EnableAttributesFilter" value="@(Model.EnableAttributesFilter.ToString())">
+    <input type="hidden" name="ViewMode" id="ViewMode" value="@(Model.ViewMode)">
+    <input type="hidden" name="PageSize" id="PageSize" value="@(Model.PageSize)">
+    <input type="hidden" name="SortOption" id="SortOption" value="@(Model.SortOption)">
+    <input type="hidden" name="PageNumber" id="PageNumber" value="@(Model.PageNumber)">
+    <input type="hidden" name="Count" id="Count" value="@(Model.Count)">
+
+
+    <div class="ajax-filter-section">
+        @{
+            if (Model.EnablePriceRangeFilter)
+            {
+                @Html.Partial("~/Plugins/Widgets.QuickFilter/Views/QuickFilter/FilterPriceRange.cshtml", Model.filterPriceModel);
+            }
+            if (Model.EnableManufacturersFilter)
+            {
+                @Html.Partial("~/Plugins/Widgets.QuickFilter/Views/QuickFilter/FilterManufacturers.cshtml", Model.manufacturerModel);
+            }
+            if (Model.EnableSpecificationsFilter)
+            {
+                @Html.Partial("~/Plugins/Widgets.QuickFilter/Views/QuickFilter/FilterSpecifications.cshtml", Model.specyficationModel);
+            }
+
+            if (Model.EnableVendorsFilter)
+            {
+                @Html.Partial("~/Plugins/Widgets.QuickFilter/Views/QuickFilter/FilterVendors.cshtml", Model.vendorsModel);
+            }
+
+            if (Model.EnableAttributesFilter)
+            {
+                @Html.Partial("~/Plugins/Widgets.QuickFilter/Views/QuickFilter/FilterAttributes.cshtml", Model.attributesModel);
+            }
+        }
+    </div>
+</form>
+
+
+<script>
+
+    function resetFilters() {
+        'use strict';
+        var priceMin = $("#min-price").val(),
+            priceCurrent = $("#price-current-min").val();
+
+        $(".clearAllfilters").hide();
+
+        if (priceMin !== priceCurrent) {
+            $(".clearAllfilters").show();
+        }
+
+        if ($(".ajaxfilter-section input").is(':checked')) {
+            $(".clearAllfilters").show();
+        }
+
+        (function getSelected() {
+            var priceMin = $("#min-price").val(),
+                priceCurrent = $("#price-current-min").val(),
+                emptyVal = "",
+                selectedValues = [];
+
+            $('.ajaxfilter-section select option:selected').each(function (i, selected) {
+                selectedValues[i] = $(selected).val();
+            });
+
+
+            selectedValues = selectedValues.filter(v => v != '');
+
+            if (selectedValues.length > 0 || priceMin !== priceCurrent) {
+                $(".clearAllfilters").show();
+            }
+
+        })();
+    };
+
+
+
+    function renderActiveFilters(renderClass, name) {
+
+        var labelFor = $("." + renderClass).attr('id').replace("square_", "");
+
+        function removeSingleFilter() {
+
+            var getedClass = this.name.replace("filtredBy", "");
+            $(".selectedOptions input[name = 'filtredBy" + renderClass + "' ].remover").unbind("click");
+            $("input." + getedClass).click();
+
+        }
+
+
+        if ($(".square." + renderClass).hasClass("active")) {
+
+            $('<li>').attr({
+                class: 'itemHolder' + renderClass,
+                readonly: true,
+                name: "sector" + renderClass,
+                value: name,
+            }).appendTo('.selectedOptions');
+
+            $('<span>').attr({
+                class: 'filter-content',
+                readonly: true,
+                name: "filtredBy" + renderClass,
+                value: name,
+            }).text(name).appendTo('.itemHolder' + renderClass);
+
+            $('<button>').attr({
+                class: 'remover lnr linearicons-cross',
+                readonly: true,
+                name: "filtredBy" + renderClass,
+            }).appendTo('.itemHolder' + renderClass);
+
+            $(".selectedOptions button[name = 'filtredBy" + renderClass + "' ].remover").on('click', removeSingleFilter);
+
+        } else {
+
+            $('.itemHolder' + renderClass).remove();
+
+        }
+
+    }
+
+    function listenToCheckBox(element, id, name) {
+        $("." + id).toggleClass("active");
+        renderActiveFilters(id, name);
+    };
+
+    //generate filter by section
+    function listenToSelect(selectId) {
+
+        var newselectId = selectId;
+
+        // reset filterby by select
+        function removeSingleFilterSelect() {
+            var getedClass = this.name.replace("filtredBy", "");
+
+            $.when(
+                $("select option").prop("disabled", false),
+                $("select#" + selectId).find("option:first")
+                    .attr('selected', true)
+
+                // hook reset filter
+            ).then(
+
+                AjaxFilter.setFilter(''),
+                AjaxFilter.reloadPages(''),
+                resetFilters(),
+                $('.itemHolder' + selectId).remove()
+
+            )
+        };
+        if ($('.itemHolder' + selectId).length > 0) {
+            var value = $('.itemHolder' + selectId).remove();
+        };
+
+        if ($("select#" + selectId + " option:selected").val().length > 0) {
+
+            var text = $("select#" + selectId + " option:selected").text();
+
+            $('<div>').attr({
+                class: 'col-12 px-0 itemHolder' + selectId,
+                readonly: true,
+                name: "sector" + selectId,
+                value: name,
+            }).appendTo('.selectedOptions');
+
+            $('<input>').attr({
+                class: 'btn btn-sm btn-secondary col-10',
+                readonly: true,
+                name: "filtredBy" + selectId,
+                value: text,
+            }).appendTo('.itemHolder' + selectId);
+
+            $('<input>').attr({
+                class: 'btn btn-sm btn-secondary remover col-2',
+                readonly: true,
+                name: "filtredBy" + selectId,
+                value: 'x',
+            }).appendTo('.itemHolder' + selectId);
+
+            $(".selectedOptions input[name = 'filtredBy" + selectId + "' ].remover").on('click', removeSingleFilterSelect);
+
+        } else {
+
+            $('.itemHolder' + selectId).remove();
+
+        }
+    };
+
+    $(function () {
+
+        if (!$(".ajax-filter-section").is(':parent')) {
+            $('.closeAllFilters').hide();
+        };
+
+        $(".closeAllFilters").on("click", function () {
+
+            var that = $(this);
+
+            if (that.hasClass("open")) {
+
+                $(".filter-section .title").each(function () {
+
+                    $(".closeAllFilters").removeClass("open").addClass("close");
+
+                    $(this).removeClass("close").addClass("open").siblings(".ajaxfilter-section").slideUp("slow");
+                    $(this).find(".arrowHold").removeClass("rotate");
+
+                })
+
+            } else {
+
+                $(".filter-section .title").each(function () {
+                    that.removeClass("close").addClass("open");
+                    $(".filter-section .title").removeClass("close").addClass("open");
+                    $(".ajaxfilter-section").slideDown("slow");
+                    $(".filter-section .title").find(".arrowHold").addClass("rotate");
+                })
+            };
+        });
+
+        // first load of window
+
+        $.when(
+            resetFilters()
+        ).then(
+            (function getSelectedAll() {
+
+                var tab = [];
+
+                $(".ajaxfilter-section input:checked").each(function () {
+
+                    var firstName = $(this).siblings("label").text().split("(")[0],
+                        firstClass = $(this).attr("class");
+
+                    renderActiveFilters(firstClass, firstName);
+
+                });
+
+                $('.ajaxfilter-section select option:selected').each(function (i, selected) {
+
+                    if ($(selected).val().length > 0) {
+                        var firstId = $(this).parents("select").attr("id");
+
+                        listenToSelect(firstId)
+
+
+                    }
+
+                });
+
+            })()
+
+        )
+
+
+        $(".ajaxfilter-section select").on("click", function () {
+            resetFilters();
+        });
+
+        // clear all click
+        $(".clearAllfilters").on("click", function () {
+
+            var priceMin = $("#min-price").val(),
+                priceMax = $("#max-price").val(),
+                priceCurrent = $("#price-current-min").val();
+
+            // empty set filters box
+            $(".selectedOptions").html("");
+
+            // cumulate activity to default state
+            $.when(
+
+                $(".ajaxfilter-section input:checked").each(function () {
+                    $(this).prop("checked", false);
+                }),
+
+                $(".ajaxfilter-section input").each(function () {
+                    $(this).prop("disabled", false);
+                }),
+
+                $('.ajaxfilter-section select').each(
+                    function () {
+                        $(this).find("option").removeAttr('selected').prop("disabled", false);
+                        $(this).find("option:first").attr('selected', true);
+                    }
+                ),
+
+                $(".square.active").removeClass("active"),
+
+                $("#slider-range").slider("values", 0, priceMin),
+                $("#slider-range").slider("values", 1, priceMax)
+
+                // hook reset filter
+            ).then(
+
+                AjaxFilter.setFilter(''),
+                resetFilters(),
+                $(this).hide()
+
+            )
+            // reset values in brackets
+            $(".ajaxfilter-clear-price").click();
+
+        });
+
+        //open close title + arr rotate
+        $(".filter-section .title").on("click", function () {
+            $(this).siblings(".ajaxfilter-section").slideToggle("slow");
+            $(this).find(".arrowHold").toggleClass("rotate");
+        });
+
+    });
+
+
+</script>

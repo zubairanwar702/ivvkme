@@ -1,0 +1,90 @@
+﻿@model Nop4you.Plugin.Widgets.SwiperSlider.Models.ConfigurationModel
+@using Nop.Web.Framework.UI;
+@using Nop.Web.Framework;
+@using Nop.Core.Infrastructure;
+@{
+    Layout = "~/Plugins/Widgets.SwiperSlider/Views/_ConfigurePluginNop4you.cshtml";
+    Html.SetActiveMenuItemSystemName("SwiperSlider");
+    ViewBag.Title = T("nop4you.widget.swiperslider.slides").Text;
+}
+
+<script>
+    $(document).ready(function() {
+        $("#@Html.IdFor(model => model.breakpoints)").click(toggleBreakpoints);
+        toggleBreakpoints();
+
+        $("#@Html.IdFor(model => model.showPagination)").click(togglePagination);
+        togglePagination();
+
+        $("#@Html.IdFor(model => model.usecountdown)").click(togglecountdown);
+        togglecountdown();
+    });
+
+
+
+    function toggleBreakpoints() {
+        if ($('#@Html.IdFor(model => model.breakpoints)').is(':checked')) {
+            $('.breakpoints-settings').show();
+        } else {
+            $('.breakpoints-settings').hide();
+        }
+    }
+
+    function togglePagination() {
+        if ($('#@Html.IdFor(model => model.showPagination)').is(':checked')) {
+            $('.showPagination').show();
+        } else {
+            $('.showPagination').hide();
+        }
+    }
+
+    function togglecountdown() {
+        if ($('#@Html.IdFor(model => model.usecountdown)').is(':checked')) {
+            $('.usecountdown').show();
+        } else {
+            $('.usecountdown').hide();
+        }
+    }
+
+</script>
+
+@await Component.InvokeAsync("StoreScopeConfiguration")
+<form asp-controller="WidgetsSwiperSlider" asp-action="Configure" method="post">
+    <div class="content-header clearfix">
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                @T("Admin.Common.Save")
+            </button>
+        </div>
+    </div>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @T("nop4you.widget.swiperslider.configuration")
+            @if (Nop4you.Plugin.Widgets.SwiperSlider.n4yPlugin.TrialVersion)
+            {
+                <text>
+                    TRIAL VERSION. To buy full verison go to our <a href="https://www.nop4you.com/swiper-slider-nopcommerce" target="blank">store</a>.
+                </text>
+            }
+        </div>
+        <div class="panel-body">
+            <div id="tabStrip" class="nav-tabs-custom">
+                <nop-tabs id="swiper-edit">
+                    <nop-tab asp-name="tab-Options" asp-title="@T("nop4you.Widget.SwiperSlider.Options")" asp-default="true">@await Html.PartialAsync("Configure.TabInfo.cshtml", Model)</nop-tab>
+                    <nop-tab asp-name="tab-SlidesList" asp-title="@T("nop4you.Widget.SwiperSlider.SlidesList")">@await Html.PartialAsync("Configure.TabSlides.cshtml", Model)</nop-tab>
+                    <nop-tab asp-name="tab-Breakpoints" asp-title="@T("nop4you.Widget.SwiperSlider.breakpoints")">@await Html.PartialAsync("Configure.TabBreakpoints.cshtml", Model)</nop-tab>
+                    <nop-tab asp-name="tab-Widgets" asp-title="@T("nop4you.Widget.SwiperSlider.widgetzonetab")">@await Html.PartialAsync("Configure.TabWidgets.cshtml", Model)</nop-tab>
+                </nop-tabs>
+            </div>
+        </div>
+    </div>
+</div>
+
+</form>
+<script>
+    $(document).ready(function () {
+        bindBootstrapTabSelectEvent('tabStrip');
+    });
+</script>

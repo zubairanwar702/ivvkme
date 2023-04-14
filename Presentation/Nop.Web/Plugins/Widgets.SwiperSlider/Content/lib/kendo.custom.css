@@ -1,0 +1,12 @@
+.k-pager-wrap .k-link.k-state-selected {
+    color: #fff;
+    background-color: #3c8dbc;
+    border-color: #3c8dbc;
+}
+.k-grid .k-grid-header .k-header {
+    color: #000;
+}
+.k-grid tr td {
+    border-bottom-width: 1px;
+    border-style: solid;
+}

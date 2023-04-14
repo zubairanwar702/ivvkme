@@ -1,0 +1,9 @@
+﻿@model ProductDetailsModel
+@if (Model.EmailAFriendEnabled)
+{
+    <div class="w-100">
+        <a class="email-a-friend-button" href="@Url.RouteUrl("ProductEmailAFriend", new { productId = Model.Id })">
+            @T("Products.EmailAFriend")
+        </a>
+    </div>
+}

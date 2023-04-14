@@ -1,0 +1,43 @@
+﻿@using Nop.Core
+@using Nop.Services.Helpers
+@using Nop.Web.Framework.UI
+@inject IWorkContext workContext
+@inject IThemeContext themeContext
+@inject IUserAgentHelper userAgentHelper
+@{
+    var supportRtl = workContext.WorkingLanguage.Rtl;
+    var themeName = themeContext.WorkingThemeName;
+
+    if (supportRtl)
+    {
+        Html.AppendCssFileParts($"~/Themes/{themeName}/Content/css/style.rtl.css");
+    }
+    else
+    {
+        Html.AppendCssFileParts($"~/Themes/{themeName}/Content/css/style.css");
+    }
+
+
+    Html.AppendCssFileParts($"~/Themes/{themeName}/Content/css/ui.css");
+
+    Html.AppendCssFileParts($"~/Themes/{themeName}/Content/css/linearicons.css");
+
+    Html.AppendScriptParts(ResourceLocation.Footer, $"~/Themes/{themeName}/Content/js/script.js");
+
+    Html.AppendScriptParts(ResourceLocation.Footer, $"~/Themes/{themeName}/Content/js/lazysizes.min.js");
+
+    Html.AppendCssFileParts($"~/Themes/{themeName}/Content/css/js-offcanvas.css");
+    Html.AppendScriptParts(ResourceLocation.Footer, $"~/Themes/{themeName}/Content/js/js-offcanvas.pkgd.min.js");
+
+    Html.AppendCssFileParts($"~/Themes/{themeName}/Content/css/bootstrap.min.css");
+    Html.AppendScriptParts(ResourceLocation.Footer, $"~/Themes/{themeName}/Content/js/bootstrap.min.js");
+    Html.AppendScriptParts(ResourceLocation.Footer, $"~/Themes/{themeName}/Content/js/popper.min.js");
+
+    Html.AppendScriptParts(ResourceLocation.Footer, $"~/Themes/{themeName}/Content/js/public.onepagecheckout.js");
+    Html.AppendScriptParts(ResourceLocation.Footer, $"~/Themes/{themeName}/Content/js/public.ajaxcart.js");
+    Html.AppendScriptParts(ResourceLocation.Footer, $"~/Themes/{themeName}/Content/js/public.common.js");
+
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/lib/jquery/jquery-3.4.1.min.js");
+
+    Html.AppendCssFileParts("~/lib/jquery-ui/jquery-ui-1.12.1.custom/jquery-ui.min.css");
+}

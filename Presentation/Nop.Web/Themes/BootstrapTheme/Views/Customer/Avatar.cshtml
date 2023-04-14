@@ -1,0 +1,50 @@
+﻿@model CustomerAvatarModel
+@{
+    Layout = "_ColumnsTwo";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Account").Text);
+    //page class
+    Html.AppendPageCssClassParts("html-account-page");
+    Html.AppendPageCssClassParts("html-avatar-page");
+}
+@section left
+{
+    @await Component.InvokeAsync("CustomerNavigation", new { selectedTabId = CustomerNavigationEnum.Avatar })
+}
+<form asp-route="CustomerAvatar" method="post" enctype="multipart/form-data">
+    <div class="page account-page avatar-page">
+        <div class="page-title">
+            <h2>@T("Account.MyAccount") - @T("Account.Avatar")</h2>
+        </div>
+        <div class="page-body">
+            <div asp-validation-summary="ModelOnly" class="message-error"></div>
+            <div class="fieldset form-group">
+                @if (!string.IsNullOrEmpty(Model.AvatarUrl))
+                {
+                    <div class="image">
+                        <img class="img-fluid" src="@(Model.AvatarUrl)" alt="avatar" />
+                    </div>
+                }
+                <div class="custom-file">
+                    <input class="custom-file-input" onchange="$('#upload-file-info').html($(this).val());" name="uploadedFile" id="uploadedFile" type="file" aria-describedby="uploadedFileAddon" />
+                    <label id="upload-file-info" class="custom-file-label" for="uploadedFile">@T("choose.file")</label>
+                </div>
+            </div>
+            <div class="buttons btn-group">
+                <button type="submit" name="upload-avatar" class="btn btn-primary upload-avatar-button">
+                    @T("Common.Upload")
+                </button>
+                @if (!string.IsNullOrEmpty(Model.AvatarUrl))
+                {
+                    <button type="submit" name="remove-avatar" class="btn btn-danger remove-avatar-button">
+                        @T("Account.Avatar.RemoveAvatar")
+                    </button>
+                }
+            </div>
+            <div class="info mt-3 alert alert-info">
+                @T("Account.Avatar.UploadRules")
+            </div>
+        </div>
+    </div>
+</form>

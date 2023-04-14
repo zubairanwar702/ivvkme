@@ -1,0 +1,42 @@
+﻿@model Nop.Plugin.Widgets.QuickFilter.Models.ProductsModel
+@using Nop.Web.Extensions;
+@using Nop.Web.Models.Catalog;
+@using Nop.Web.Framework;
+@using Nop.Web.Framework.UI;
+
+
+@if (Model.Products.Count() > 0)
+{
+
+    if (Model.ViewMode == "list")
+    {
+        <div class="product-list">
+            <div class="row-sm">
+                @foreach (var product in Model.Products)
+                {
+                <div class="col-12 mb-3">
+                    @await Html.PartialAsync("~/Themes/BootstrapTheme/Views/Shared/_ProductBoxList.cshtml", product, new ViewDataDictionary(this.ViewData))
+                </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="subCategoryList product-grid">
+            <div class="row-sm">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 product-container mb-3">
+                        @await Html.PartialAsync("~/Themes/BootstrapTheme/Views/Shared/_ProductBox.cshtml", product, new ViewDataDictionary(this.ViewData))
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <div class="navigation pager pagination">
+        @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+    </div>
+
+}

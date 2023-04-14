@@ -1,0 +1,324 @@
+﻿@using System
+@using Nop.Web.Framework.UI
+@using Nop.Web.Framework
+@using Nop.Core.Infrastructure;
+@model Nop4you.Plugin.Widgets.SwiperSlider.Models.PublicInfoModel
+@{
+    Layout = "";
+    Html.AddCssFileParts("~/Plugins/Widgets.SwiperSlider/Content/lib/swiper.css");
+    Html.AddCssFileParts("~/Plugins/Widgets.SwiperSlider/Content/lib/animate.css");
+    Html.AddCssFileParts("~/Plugins/Widgets.SwiperSlider/Content/css/swiperSlider.css");
+    Html.AddScriptParts(ResourceLocation.Head, "~/Plugins/Widgets.SwiperSlider/Content/lib/swiper.js");
+    Html.AddScriptParts(ResourceLocation.Footer, "~/Plugins/Widgets.SwiperSlider/Content/lib/breakpoints.js");
+
+    var settings = EngineContext.Current.Resolve<Nop4you.Plugin.Widgets.SwiperSlider.WidgetSwiperSliderSettings>();
+
+    var ifloop = settings.loop;
+    var isLoop = "";
+    var minH = "";
+    if (ifloop)
+    {
+        isLoop = "true";
+    }
+    else
+    {
+        isLoop = "false";
+    }
+    if (@settings.setMinHeight > 0)
+    {
+        minH = "style=height:" + @settings.setMinHeight + "px";
+    }
+    else
+    {
+        minH = "style=height:100%";
+    }
+}
+
+<script asp-location="Footer">
+    var mySwiper = new Swiper('#nop4youSlider', {
+        // Optional parameters
+        init: false,
+        slidesPerView: @settings.slidesPerView,
+        spaceBetween: @settings.spaceBetween,
+        @if (settings.breakpoints)
+        {
+            <text>
+
+        breakpoints: {
+
+                @if(!settings.turnOffExtraSmall) {
+                    <text>
+                    320: {
+                        slidesPerView: @settings.slidesPerViewExtraSmall,
+                        spaceBetween: @settings.spaceBetweenExtraSmall,
+                    },
+                    </text>
+                }
+                @if(!settings.turnOffSmall)
+                {
+                    <text>
+                        640: {
+                            slidesPerView: @settings.slidesPerViewSmall,
+                            spaceBetween: @settings.spaceBetweenSmall,
+                        },
+                    </text>
+                }
+                @if(!settings.turnOffMedium)
+                {
+                    <text>
+                        768: {
+                            slidesPerView: @settings.slidesPerViewMedium,
+                            spaceBetween: @settings.spaceBetweenMedium,
+                        },
+                    </text>
+                }
+                @if(!settings.turnOffLarge)
+                {
+                    <text>
+                        1024: {
+                            slidesPerView: @settings.slidesPerViewLarge,
+                            spaceBetween: @settings.spaceBetweenLarge,
+                        },
+                </text>
+                }
+                @if(!settings.turnOffExtraLarge)
+                {
+                    <text>
+                        1200: {
+                                        slidesPerView: @settings.slidesPerViewExtraLarge,
+                                spaceBetween: @settings.spaceBetweenExtraLarge,
+                            },
+                        },
+                    </text>
+                }
+            },
+
+            </text>
+        }
+
+        loop: @isLoop,
+
+        @if(settings.showPagination)
+        {
+            <text>
+            // If we need pagination
+            pagination:
+            {
+                el: '.nop4youSlider-pagination.swiper-pagination',
+                clickable: true,
+                type: '@settings.paginationType',
+            },
+            </text>
+        }
+
+        @if(settings.showNavigation)
+        {
+            <text>
+            // Navigation arrows
+            navigation: {
+                nextEl: '.nop4youSlider-next',
+                prevEl: '.nop4youSlider-prev',
+            },
+            </text>
+        }
+
+        @if(settings.autoPlay)
+        {
+            <text>
+            // speed
+            autoplay: {
+                delay: @settings.speed,
+            },
+            </text>
+        }
+        @if(settings.lazyLoading)
+        {
+            <text>
+            lazy: {
+                loadPrevNext: true,
+            },
+            </text>
+        }
+        @if(settings.preLoadImages)
+        {
+            <text>
+            preloadImages: true,
+            </text>
+        }
+        @if(settings.usecountdown)
+        {
+            <text>
+            scrollbar: {
+                el: '.swiper-scrollbar',
+                draggable: true,
+            },
+            </text>
+        }
+
+        autoResize: true,
+        calculateHeight: true
+    })
+</script>
+
+<div id="nop4youSlider" class="swiper-container">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        @foreach (var slide in Model.Slides)
+        {
+            @if (!string.IsNullOrEmpty(slide.PictureUrl))
+            {
+                if (settings.lazyLoading)
+                {
+                    var hlazy = @slide.PictureHeight + "px";
+                    <div class="swiper-slide swiper-lazy" data-background="@slide.PictureUrl" data-width="@slide.PictureWidth" data-height="@slide.PictureHeight" style="height:@hlazy">
+                        @if (settings.preLoadImages)
+                        {
+                            <div class="swiper-lazy-preloader"></div>
+                        }
+                        <div class="slide-caption @slide.Caption">
+                            <div>
+                                <section class="slide-header" data-header="animated @slide.HeaderAnimation delay-@(slide.HeaderAnimationDelay)s">
+                                    @Html.Raw(slide.Header)
+                                </section>
+                                <section class="slide-body" data-body="animated @slide.BodyAnimation delay-@(slide.BodyAnimationDelay)s">
+                                    @Html.Raw(slide.Body)
+                                </section>
+                                <section class="slide-footer" data-footer="animated @slide.FooterAnimation delay-@(slide.FooterAnimationDelay)s">
+                                    @Html.Raw(slide.Footer)
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="swiper-slide">
+                        <img src="@slide.PictureUrl" data-thumb="@slide.PictureUrl" alt="@slide.PictureAlt" title="@slide.PictureTitle" />
+                        <div class="slide-caption @slide.Caption">
+                            <div>
+                                <section class="slide-header" data-header="animated @slide.HeaderAnimation delay-@(slide.HeaderAnimationDelay)s">
+                                    @Html.Raw(slide.Header)
+                                </section>
+                                <section class="slide-body" data-body="animated @slide.BodyAnimation delay-@(slide.BodyAnimationDelay)s">
+                                    @Html.Raw(slide.Body)
+                                </section>
+                                <section class="slide-footer" data-footer="animated @slide.FooterAnimation delay-@(slide.FooterAnimationDelay)s">
+                                    @Html.Raw(slide.Footer)
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="swiper-slide" @(Model.Slides.Where(x => string.IsNullOrEmpty(x.PictureUrl)).Count() > 0 ? minH : "")>
+                    <div class="slide-caption @slide.Caption">
+                        <div>
+                            <section class="slide-header" data-header="animated @slide.HeaderAnimation delay-@(slide.HeaderAnimationDelay)s">
+                                @Html.Raw(slide.Header)
+                            </section>
+                            <section class="slide-body" data-body="animated @slide.BodyAnimation delay-@(slide.BodyAnimationDelay)s">
+                                @Html.Raw(slide.Body)
+                            </section>
+                            <section class="slide-footer" data-footer="animated @slide.FooterAnimation delay-@(slide.FooterAnimationDelay)s">
+                                @Html.Raw(slide.Footer)
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    <script asp-location="Footer">
+            function destroySwiper() {
+                    @if (settings.turnOffExtraSmall)
+                    {
+                        <text>bP(320);</text>
+                    }
+                    @if (settings.turnOffSmall)
+                    {
+                        <text>bP(640);</text>
+                    }
+                    @if (settings.turnOffMedium)
+                    {
+                        <text>bP(768);</text>
+                    }
+                    @if (settings.turnOffLarge)
+                    {
+                        <text>bP(1024);</text>
+                    }
+                    @if (settings.turnOffExtraLarge)
+                    {
+                        <text>bP(1200);</text>
+                    }
+            }
+            function lazyFix() {
+                $('#nop4youSlider .swiper-slide').each(function () {
+                    var oldH = parseInt($(this).data('height'));
+                    var oldW = parseInt($(this).data('width'));
+                    var actualW = parseInt($(this).css('width'));
+                    actualH = (actualW / oldW) * oldH + 'px';
+                    $(this).css('height', actualH);
+                });
+            }
+            $(document).ready(function () {
+                destroySwiper();
+                lazyFix();
+                $(window).resize(function () {
+                    destroySwiper();
+                    lazyFix();
+                });
+                mySwiper.on('init', function () {
+                    var headerClass = $('#nop4youSlider .swiper-slide-active .slide-header').data('header'),
+                        bodyClass = $('#nop4youSlider .swiper-slide-active .slide-body').data('body'),
+                        footerClass = $('#nop4youSlider .swiper-slide-active .slide-footer').data('footer');
+                    $("#nop4youSlider .swiper-slide-active .slide-caption").addClass('d-flex');
+                    $("#nop4youSlider .swiper-slide-active .slide-header").addClass(headerClass);
+                    $("#nop4youSlider .swiper-slide-active .slide-body").addClass(bodyClass);
+                    $("#nop4youSlider .swiper-slide-active .slide-footer").addClass(footerClass);
+                    $("#nop4youSlider .swiper-scrollbar-drag").addClass('progressAnimation').css('animation-duration', '@settings.speed' + 'ms');
+                });
+                mySwiper.init();
+                mySwiper.on('slideChangeTransitionEnd', function () {
+                    var headerClass = $('#nop4youSlider .swiper-slide-active .slide-header').data('header'),
+                        bodyClass = $('#nop4youSlider .swiper-slide-active .slide-body').data('body'),
+                        footerClass = $('#nop4youSlider .swiper-slide-active .slide-footer').data('footer');
+                    $("#nop4youSlider .swiper-slide-active .slide-caption").addClass('d-flex');
+                    $("#nop4youSlider .swiper-slide-active .slide-header").addClass(headerClass);
+                    $("#nop4youSlider .swiper-slide-active .slide-body").addClass(bodyClass);
+                    $("#nop4youSlider .swiper-slide-active .slide-footer").addClass(footerClass);
+                    $("#nop4youSlider .swiper-scrollbar-drag").addClass('progressAnimation');
+                });
+                mySwiper.on('slideChange', function () {
+                    var headerClass = $('#nop4youSlider .swiper-slide-active .slide-header').data('header'),
+                        bodyClass = $('#nop4youSlider .swiper-slide-active .slide-body').data('body'),
+                        footerClass = $('#nop4youSlider .swiper-slide-active .slide-footer').data('footer');
+                    $("#nop4youSlider .swiper-slide-active .slide-caption").removeClass('d-flex');
+                    $("#nop4youSlider .swiper-slide-active .slide-header").removeClass(headerClass);
+                    $("#nop4youSlider .swiper-slide-active .slide-body").removeClass(bodyClass);
+                    $("#nop4youSlider .swiper-slide-active .slide-footer").removeClass(footerClass);
+                    $("#nop4youSlider .swiper-scrollbar-drag").removeClass('progressAnimation');
+                });
+            });
+    </script>
+    </div>
+    <!-- If we need pagination -->
+    @if (settings.showPagination)
+    {
+        <div class="nop4youSlider-pagination swiper-pagination"></div>
+    }
+
+    <!-- If we need navigation buttons -->
+    @if (settings.showNavigation)
+    {
+        <div class="nop4youSlider-next"><span class="linearicons-chevron-right"></span></div>
+        <div class="nop4youSlider-prev"><span class="linearicons-chevron-left"></span></div>
+    }
+
+    @if (settings.usecountdown)
+    {
+        <div class="swiper-scrollbar @settings.countdown"></div>
+    }
+
+</div>

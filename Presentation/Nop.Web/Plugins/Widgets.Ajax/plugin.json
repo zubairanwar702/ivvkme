@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Widgets",
+  "FriendlyName": "Ajax request",
+  "SystemName": "Widgets.Ajax",
+  "Version": "4.30.01",
+  "SupportedVersions": [ "4.30" ],
+  "Author": "nop4you",
+  "DisplayOrder": 1,
+  "FileName": "Nop4you.Plugin.Widgets.Ajax.dll",
+  "Description": "This plugin allows you to send ajax requests"
+}

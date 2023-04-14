@@ -1,0 +1,16 @@
+﻿{
+  "Group": "nop4you",
+  "FriendlyName": "Quick Filter",
+  "SupportedVersions": [
+    "4.30"
+  ],
+  "Author": "nop4you.com",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Widgets.QuickFilter.dll",
+  "Description": "Widget to filter the products dynamically with desired criteria and without the whole page reloading.",
+  "LimitedToStores": [],
+  "LimitedToCustomerRoles": [],
+  "DependsOnSystemNames": [],
+  "SystemName": "Product.QuickFilter",
+  "Version": "4.30.001"
+}

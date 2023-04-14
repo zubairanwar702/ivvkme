@@ -1,0 +1,16 @@
+﻿{
+  "Group": "nop4you",
+  "FriendlyName": "Swiper",
+  "SupportedVersions": [
+    "4.30"
+  ],
+  "Author": "nop4you",
+  "DisplayOrder": 1,
+  "FileName": "Nop4you.Plugin.Widgets.SwiperSlider.dll",
+  "Description": "This plugin allows you to create sliders",
+  "LimitedToStores": [],
+  "LimitedToCustomerRoles": [],
+  "DependsOnSystemNames": [],
+  "SystemName": "Widgets.SwiperSlider",
+  "Version": "4.30.008"
+}

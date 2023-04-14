@@ -1,0 +1,37 @@
+﻿@model Nop4you.Plugin.Widgets.SwiperSlider.Models.SlideConfigurationModel
+@using Nop.Core.Domain.Catalog;
+@using Nop.Services.Events;
+@using Nop.Web.Framework.UI;
+@using Nop.Web.Framework;
+@Html.ValidationSummary(false)
+
+@using (Html.BeginForm())
+{
+    <div class="content-header clearfix">
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                @T("Admin.Common.Save")
+            </button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="form-horizontal">
+            <div id="tabStrip" class="nav-tabs-custom">
+                <nop-tabs id="ebaysettings-edit">
+                    <nop-tab asp-name="tab-Options" asp-title="@T("nop4you.Widget.SwiperSlider.General")" asp-default="true">@await Html.PartialAsync("_CreateOrUpdate.TabInfo.cshtml", Model)</nop-tab>
+                    <nop-tab asp-name="tab-Mappings" asp-title="@T("nop4you.Widget.SwiperSlider.Mappings")">@await Html.PartialAsync("_CreateOrUpdate.TabMappings.cshtml", Model)</nop-tab>
+                    <nop-tab asp-name="tab-Pictures" asp-title="@T("nop4you.Widget.SwiperSlider.picture")">@await Html.PartialAsync("_CreateOrUpdate.TabPictures.cshtml", Model)</nop-tab>
+                    <nop-tab asp-name="tab-Animations" asp-title="@T("nop4you.Widget.SwiperSlider.Animations")">@await Html.PartialAsync("_CreateOrUpdate.TabAnimations.cshtml", Model)</nop-tab>
+                    <nop-tab asp-name="tab-Stores" asp-title="@T("nop4you.Widget.SwiperSlider.Stores")">@await Html.PartialAsync("_CreateOrUpdate.TabStores.cshtml", Model)</nop-tab>
+                </nop-tabs>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        bindBootstrapTabSelectEvent('tabStrip');
+    });
+</script>

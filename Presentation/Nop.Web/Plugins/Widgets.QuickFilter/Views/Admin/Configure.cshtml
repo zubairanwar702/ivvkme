@@ -1,0 +1,176 @@
+﻿@{
+    Layout = "~/Plugins/Widgets.QuickFilter/Views/_ConfigurePluginNop4you.cshtml";
+    Html.SetActiveMenuItemSystemName("WidgetsQuickFilter");
+}
+@model Nop.Plugin.Widgets.QuickFilter.Models.ConfigurationModel
+@using Nop.Plugin.Widgets.QuickFilter
+@using Nop.Web.Framework;
+@using Nop.Services;
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("#@Html.IdFor(model => model.FilterEnableManufacturers)").click(filterEnableManufacturers);
+            filterEnableManufacturers();
+
+            $("#@Html.IdFor(model => model.FilterEnableVendors)").click(filterEnableVendors);
+            filterEnableVendors();
+
+            $("#@Html.IdFor(model => model.FilterEnableSpecifications)").click(filterEnableSpecifications);
+            filterEnableSpecifications();
+
+            $("#@Html.IdFor(model => model.FilterEnableAttributes)").click(filterEnableAttributes);
+            filterEnableAttributes();
+
+        });
+
+        function filterEnableManufacturers() {
+            if ($('#@Html.IdFor(model => model.FilterEnableManufacturers)').is(':checked')) {
+                $('#ctEnableManufacturers').show();
+            } else {
+                $('#ctEnableManufacturers').hide();
+            }
+        }
+
+		function filterEnableVendors() {
+            if ($('#@Html.IdFor(model => model.FilterEnableVendors)').is(':checked')) {
+                $('#ctEnableVendors').show();
+            } else {
+                $('#ctEnableVendors').hide();
+            }
+        }
+
+		function filterEnableSpecifications() {
+            if ($('#@Html.IdFor(model => model.FilterEnableSpecifications)').is(':checked')) {
+                $('#ctEnableSpecifications').show();
+            } else {
+                $('#ctEnableSpecifications').hide();
+            }
+        }
+
+		function filterEnableAttributes() {
+            if ($('#@Html.IdFor(model => model.FilterEnableAttributes)').is(':checked')) {
+                $('#ctEnableAttributes').show();
+            } else {
+                $('#ctEnableAttributes').hide();
+            }
+        }
+
+</script>
+
+
+@using (Html.BeginForm())
+{
+    <div class="content-header clearfix">
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                @T("Admin.Common.Save")
+            </button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        @T("Plugin.Widgets.QuickFilter.Configuration")
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterWidgetZone" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="FilterWidgetZone" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterEnablePriceRange" />
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="FilterEnablePriceRange" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterEnableManufacturers" />
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="FilterEnableManufacturers" />
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="ctEnableManufacturers">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterManufacturerCheckOrDropdown" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-select asp-for="FilterManufacturerCheckOrDropdown" asp-items="((FiltersUI)Model.FilterManufacturerCheckOrDropdown).ToSelectList()" />
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterEnableVendors" />
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="FilterEnableVendors" />
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="ctEnableVendors">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterVendorCheckOrDropdown" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-select asp-for="FilterVendorCheckOrDropdown" asp-items="((FiltersUI)Model.FilterVendorCheckOrDropdown).ToSelectList()" />
+                            </div>
+                        </div>*@
+
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterEnableSpecifications" />
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="FilterEnableSpecifications" />
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="ctEnableSpecifications">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterSpecyficationCheckOrDropdown" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-select asp-for="FilterSpecyficationCheckOrDropdown" asp-items="((FiltersUI)Model.FilterSpecyficationCheckOrDropdown).ToSelectList()" />
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterEnableAttributes" />
+                            </div>
+                            <div class="col-md-9">
+                                <input asp-for="FilterEnableAttributes" />
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="ctEnableAttributes">
+                            <div class="col-md-3">
+                                <nop-label asp-for="FilterAttributesCheckOrDropdown" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-select asp-for="FilterAttributesCheckOrDropdown" asp-items="((FiltersUI)Model.FilterAttributesCheckOrDropdown).ToSelectList()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

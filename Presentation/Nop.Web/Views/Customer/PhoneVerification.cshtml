@@ -1,0 +1,76 @@
+﻿@model PhoneVerificationModel
+@using Nop.Core
+@using Nop.Core.Domain.Customers
+
+@inject IWebHelper webHelper
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    Html.AddTitleParts(T("Account.PhoneVerification").Text);
+    //page class
+    Html.AppendPageCssClassParts("html-login-page");
+
+    //register URL with return URL (if specified)
+    var registerUrl = Url.RouteUrl("Register", new { returnUrl = this.Context.Request.Query["returnUrl"] }, webHelper.CurrentRequestProtocol);
+}
+
+<h1>@T("Account.PhoneVerification.Welcome")</h1>
+@await Html.PartialAsync("_ExternalAuthentication.Errors")
+
+<br />
+<div class="row">
+
+    <div class="col-lg-3 col-md-2 col-sm-1">
+
+    </div>
+    <div class="col-lg-6 col-md-8 col-sm-10">
+        <hr />
+        <div class=" fieldset">
+            <form asp-route="PhoneVerificationPage" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" autocomplete="off">
+                <div asp-validation-summary="ModelOnly" class="message-error">@T("Account.PhoneVerification.Verified")</div>
+
+                <div class="form-fields">
+                    <div class="form-group">
+                        <div asp-validation-summary="ModelOnly" class="message-error">@T("Account.PhoneVerification.Verified")</div>
+                        <label><strong>@T("Address.Fields.PhoneNumber")</strong></label>
+                        <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber" autofocus="autofocus" />
+                        <span asp-validation-for="PhoneNumber"></span>
+                    </div>
+                    <div class="form-group" style="text-align:center">
+                        <div id="reCAPTCHA" style="text-align:center">
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label><strong>@T("Account.PhoneVerification.OTP")</strong></label>
+                        <input asp-for="Code" class="form-control" autofocus="autofocus" id="Code" />
+                        <span asp-validation-for="Code"></span>
+                    </div>
+
+                </div>
+                <div class="buttons">
+                    <span id="ConfirmBtn" class="btn btn-default" style="display:none" onclick="confirm()">@T("Account.PhoneVerification.Verify")</span>
+                    <input  id="SubmitBtn" class="btn btn-success" style="display:none" type="submit" value="@T("Account.PhoneVerification.Continue")" />
+                </div>
+            </form>
+        </div>
+        <hr />
+    </div>
+    <div class="col-lg-3 col-md-2 col-sm-1"></div>
+    @await Component.InvokeAsync("ExternalMethods", "ExternalAuthentication") 
+</div>
+
+<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+
+<!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+ 
+<script src="~/js/PhoneVerification.js"></script>

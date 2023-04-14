@@ -1,0 +1,120 @@
+﻿@model ManufacturerModel
+@using Nop.Core.Domain.Seo
+@inject Nop.Core.IWebHelper webHelper
+@inject SeoSettings seoSettings
+@{
+    Layout = "_ColumnsTwo";
+
+    //title
+    Html.AddTitleParts(!string.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    //meta
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+    //page class
+    Html.AppendPageCssClassParts("html-manufacturer-page");
+
+    if (seoSettings.CanonicalUrlsEnabled)
+    {
+        var manufacturerUrl = Url.RouteUrl("Manufacturer", new { SeName = Model.SeName }, webHelper.CurrentRequestProtocol).ToLowerInvariant();
+        Html.AddCanonicalUrlParts(manufacturerUrl, seoSettings.QueryStringInCanonicalUrlsEnabled);
+    }
+}
+<div class="page manufacturer-page">
+    <div class="page-title">
+        <h2><strong>@Model.Name</strong></h2>
+    </div>
+    <div class="page-body">
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ManufacturerDetailsTop, additionalData = Model })
+        @*description*@
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <div class="manufacturer-description">
+                @Html.Raw(Model.Description)
+            </div>
+        }
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ManufacturerDetailsBeforeFeaturedProducts, additionalData = Model })
+        @*featured products*@
+        @section FeaturedProducts {
+            @if (Model.FeaturedProducts.Count > 0)
+            {
+
+                <div class="product-grid block featured-product-grid mb-3">
+                    <div class="d-inline-flex flex-nowrap align-items-center w-100 mb-3 mt-xl-0 mt-3">
+                        <h5 class="title w-100 m-0">
+                            <strong>@T("Products.FeaturedProducts")</strong>
+                        </h5>
+                        <div class="d-inline-flex align-items-center CatalogProducts-nav pl-3">
+                            <div class="custom-button-prev mr-1">
+                                <span class="lnr linearicons-chevron-left"></span>
+                            </div>
+                            <div class="custom-button-next">
+                                <span class="lnr linearicons-chevron-right"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-container CatalogProducts">
+                        <div class="swiper-wrapper">
+                            @foreach (var item in Model.FeaturedProducts)
+                            {
+                                <div class="swiper-slide">
+                                    @await Html.PartialAsync("_HomeProducts", item)
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ManufacturerDetailsAfterFeaturedProducts, additionalData = Model })
+        @if (Model.Products.Count > 0)
+        {
+            @await Html.PartialAsync("_CatalogSelectors", Model.PagingFilteringContext)
+        }
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ManufacturerDetailsBeforeFilters, additionalData = Model })
+
+        @*@if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
+        {
+            @await Html.PartialAsync("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter)
+        }*@
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ManufacturerDetailsBeforeProductList, additionalData = Model })
+
+        @if (Model.Products.Count > 0)
+        {
+            if (Model.PagingFilteringContext.ViewMode == "grid")
+            {
+                <div class="subCategoryList product-grid">
+                    <div class="row-sm">
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 product-container mb-3">
+                                <partial name="_ProductBox" model="product" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row-sm">
+                    @foreach (var product in Model.Products)
+                    {
+                        <div class="col-12 mb-3">
+                            <partial name="_ProductBoxList" model="product" />
+                        </div>
+                    }
+                </div>
+
+            }
+        }
+        @{
+            var pager = Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber");
+        }
+        @if (!pager.IsEmpty())
+        {
+            <div class="pager">
+                @pager
+            </div>
+        }
+        @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ManufacturerDetailsBottom, additionalData = Model })
+    </div>
+</div>

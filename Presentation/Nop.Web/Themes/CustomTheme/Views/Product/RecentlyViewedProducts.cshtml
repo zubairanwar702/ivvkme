@@ -1,0 +1,29 @@
+﻿@model IList<ProductOverviewModel>
+@{
+    Layout = "_ColumnsTwo";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.RecentlyViewedProducts").Text);
+    //page class
+    Html.AppendPageCssClassParts("html-recently-viewed-products-page");
+}
+<div class="page recently-viewed-products-page">
+    <div class="page-title mb-3">
+        <h2><strong>@T("Products.RecentlyViewedProducts")</strong></h2>
+    </div>
+    <div class="page-body">
+        @if (Model.Count > 0)
+        {
+            <div class="subCategoryList product-grid">
+                <div class="row-sm">
+                    @foreach (var product in Model)
+                    {
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 product-container mb-3">
+                            <partial name="_ProductBox" model="product" />
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

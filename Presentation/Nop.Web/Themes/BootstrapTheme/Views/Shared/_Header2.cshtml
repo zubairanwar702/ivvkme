@@ -1,0 +1,56 @@
+﻿<header class="section-header">
+    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderBefore })
+    @*<div class="header-upper">
+            <div class="header-selectors-wrapper">
+                @await Component.InvokeAsync("TaxTypeSelector")
+                @await Component.InvokeAsync("CurrencySelector")
+                @await Component.InvokeAsync("LanguageSelector")
+                @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderSelectors })
+            </div>
+            <div class="header-links-wrapper">
+                @await Component.InvokeAsync("HeaderLinks")
+                @await Component.InvokeAsync("FlyoutShoppingCart")
+            </div>
+        </div>*@
+    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderMiddle })
+    @*<div class="header-lower">
+            <div class="header-logo">
+                @await Component.InvokeAsync("Logo")
+            </div>
+            <div class="search-box store-search-box">
+                @await Component.InvokeAsync("SearchBox")
+            </div>
+        </div>*@
+
+    <section class="header-main header-links shadow-sm other-pages-header">
+        <div class="container">
+            <div class="row-sm align-items-center">
+                <div class="col-xl-6-24 col-lg-7-24 col-md-12 col-sm-12 col-12 d-inline-flex justify-content-between align-items-center order-1 position-static">
+                    <a class="c-button js-offcanvas-trigger d-lg-none" data-offcanvas-trigger="off-canvas-left-push">
+                        <span class="menu-icon"><span></span><span></span><span></span></span>
+                    </a>
+                    @await Component.InvokeAsync("Logo")
+                    <div id="mainNav_container">
+                        <button class="navbar-toggler d-lg-flex d-none" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="menu-icon"><span></span><span></span><span></span></span>
+                        </button>
+                        <nav class="mainNav-other navbar navbar-light p-0 ml-0 ml-lg-auto">
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav menu-category flex-column w-100">
+                                    @await Component.InvokeAsync("TopMenu")
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-xl-12-24 col-lg-9-24 col-md-12 col-sm-12 col-12 order-3 order-lg-2 d-lg-block d-none">
+                    @await Component.InvokeAsync("SearchBox")
+                </div> <!-- col.// -->
+                <div class="col-xl-6-24 col-lg-8-24 col-md-6 col-sm-12 col-12 order-2 order-lg-3 d-lg-block d-none">
+                    @await Component.InvokeAsync("HeaderLinks")
+                </div> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- container.// -->
+    </section> <!-- header-main .// -->
+    @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.HeaderAfter })
+</header>

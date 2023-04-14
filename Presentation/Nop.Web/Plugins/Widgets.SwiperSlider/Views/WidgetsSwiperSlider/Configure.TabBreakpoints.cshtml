@@ -1,0 +1,172 @@
+﻿@model Nop4you.Plugin.Widgets.SwiperSlider.Models.ConfigurationModel
+@using Nop.Core.Domain.Catalog;
+@using Nop.Services.Events;
+@using Nop.Web.Framework.UI;
+@using Nop.Web.Framework;
+
+<div class="form-group">
+    <div class="col-md-3">
+        <nop-override-store-checkbox asp-for="breakpoints_OverrideForStore" asp-input="breakpoints" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+        <nop-label asp-for="breakpoints" />
+    </div>
+    <div class="col-md-9">
+        <nop-editor asp-for="breakpoints" />
+        <span asp-validation-for="breakpoints"></span>
+    </div>
+
+    <div class="breakpoints-settings">
+        
+        <div class="col-md-4">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">@T("nop4you.widget.swiperslider.breakpoints.small")</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-override-store-checkbox asp-for="slidesPerViewSmall_OverrideForStore" asp-input="slidesPerViewSmall" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                                <nop-label asp-for="slidesPerViewSmall" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="slidesPerViewSmall" />
+                                <span asp-validation-for="slidesPerViewSmall"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="spaceBetweenSmall" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="spaceBetweenSmall" asp-postfix="px" />
+                                <span asp-validation-for="spaceBetweenSmall"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="turnOffSmall" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="turnOffSmall" />
+                                <span asp-validation-for="turnOffSmall"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">@T("nop4you.widget.swiperslider.breakpoints.medium")</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-override-store-checkbox asp-for="slidesPerViewMedium_OverrideForStore" asp-input="slidesPerViewMedium" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                                <nop-label asp-for="slidesPerViewMedium" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="slidesPerViewMedium" />
+                                <span asp-validation-for="slidesPerViewMedium"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="spaceBetweenMedium" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="spaceBetweenMedium" asp-postfix="px" />
+                                <span asp-validation-for="spaceBetweenMedium"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="turnOffMedium" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="turnOffMedium" />
+                                <span asp-validation-for="turnOffMedium"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">@T("nop4you.widget.swiperslider.breakpoints.large")</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-override-store-checkbox asp-for="slidesPerViewLarge_OverrideForStore" asp-input="slidesPerViewLarge" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                                <nop-label asp-for="slidesPerViewLarge" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="slidesPerViewLarge" />
+                                <span asp-validation-for="slidesPerViewLarge"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="spaceBetweenLarge" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="spaceBetweenLarge" asp-postfix="px" />
+                                <span asp-validation-for="spaceBetweenLarge"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="turnOffLarge" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="turnOffLarge" />
+                                <span asp-validation-for="turnOffLarge"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">@T("nop4you.widget.swiperslider.breakpoints.extralarge")</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-override-store-checkbox asp-for="slidesPerViewExtraLarge_OverrideForStore" asp-input="slidesPerViewExtraLarge" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                                <nop-label asp-for="slidesPerViewExtraLarge" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="slidesPerViewExtraLarge" />
+                                <span asp-validation-for="slidesPerViewExtraLarge"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="spaceBetweenExtraLarge" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="spaceBetweenExtraLarge" asp-postfix="px" />
+                                <span asp-validation-for="spaceBetweenExtraLarge"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <nop-label asp-for="turnOffExtraLarge" />
+                            </div>
+                            <div class="col-md-9">
+                                <nop-editor asp-for="turnOffExtraLarge" />
+                                <span asp-validation-for="turnOffExtraLarge"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

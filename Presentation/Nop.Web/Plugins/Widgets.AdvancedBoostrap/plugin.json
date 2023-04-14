@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Widgets",
+  "FriendlyName": "Advanced Boostrap Theme",
+  "SystemName": "Widgets.AdvancedBoostrap",
+  "Version": "4.30.001",
+  "SupportedVersions": [ "4.30" ],
+  "Author": "nop4you",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Widgets.AdvancedBoostrap.dll",
+  "Description": "This plugin help you with installation of your new theme"
+}

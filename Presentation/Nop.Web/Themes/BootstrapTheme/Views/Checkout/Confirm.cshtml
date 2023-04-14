@@ -1,0 +1,119 @@
+﻿@model CheckoutConfirmModel
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.Checkout").Text);
+    //page class
+    Html.AppendPageCssClassParts("html-checkout-page");
+    Html.AppendPageCssClassParts("html-order-confirm-page");
+}
+<div class="page checkout-page order-confirm-page">
+    <div class="container">
+        @await Component.InvokeAsync("CheckoutProgress", new { step = CheckoutProgressStep.Confirm })
+        <h1 class="generalTitle my-3 h2 w-100 text-center">@T("Checkout.ConfirmYourOrder")</h1>
+        <div class="page-body checkout-data">
+            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.CheckoutConfirmTop })
+            <div class="section confirm-order">
+                <form asp-route="CheckoutConfirm" method="post" id="confirm-order-form">
+                    <script type="text/javascript" asp-location="Footer">
+                        $(document).ready(function () {
+                            $('.confirm-order-next-step-button').click(function () {
+                                //terms of service
+                                var termOfServiceOk = true;
+                                if ($('#termsofservice').length > 0) {
+                                    //terms of service element exists
+                                    if (!$('#termsofservice').is(':checked')) {
+                                        $('#terms-of-service-warning-box-modal').modal('show')
+                                        termOfServiceOk = false;
+                                    } else {
+                                        termOfServiceOk = true;
+                                    }
+                                }
+                                if (termOfServiceOk) {
+                                    $('#confirm-order-form').submit();
+                                    $('.confirm-order-next-step-button').attr('disabled', 'disabled');
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            });
+                        });
+                    </script>
+                    @if (!string.IsNullOrEmpty(Model.MinOrderTotalWarning))
+                    {
+                        <span class="min-order-warning">@Model.MinOrderTotalWarning</span>
+                    }
+                    else
+                    {
+                        if (Model.TermsOfServiceOnOrderConfirmPage)
+                        {
+                            <div id="terms-of-service-warning-box" title="@T("Checkout.TermsOfService")" style="display: none;">
+                                <p>@T("Checkout.TermsOfService.PleaseAccept")</p>
+                            </div>
+                            <div class="terms-of-service custom-checkbox custom-control mb-1">
+                                <input id="termsofservice" type="checkbox" class="custom-control-input" name="termsofservice" />
+                                <label class="custom-control-label" for="termsofservice">
+                                    <span class="custom-control-description">@T("Checkout.TermsOfService.IAccept")<a class="read" onclick="javascript:OpenWindow('@Url.RouteUrl("TopicPopup", new { SystemName = "conditionsofuse" })', 450, 500, true)"> - <strong>@T("Checkout.TermsOfService.Read")</strong></a></span>
+                                </label>
+                                @if (Model.TermsOfServicePopup)
+                                {
+                                    <div class="modal fade" title="@T("Checkout.TermsOfService")" id="terms-of-service-warning-box-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content rounded-0">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">@T("Checkout.TermsOfService")</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body px-4 pb-4">
+                                                    <h5 class="h3 w-100 text-center">
+                                                    </h5>
+                                                    @T("Checkout.TermsOfService.PleaseAccept")
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <a class="read text-info" id="read-terms" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })"><strong>@T("Checkout.TermsOfService.Read")</strong></a>
+                                }
+                            </div>
+                        }
+                        <div class="buttons">
+                            <input type="submit" name="nextstep" value="@T("Checkout.ConfirmButton")" class="btn btn-info  confirm-order-next-step-button" />
+                        </div>
+                        <script asp-location="Footer">
+                            $('#confirm-order-form').on('submit',
+                                function () {
+                                    var button = $(this).find('input[type="submit"][name="nextstep"]');
+                                    setTimeout(function () {
+                                        button.prop('disabled', true);
+                                    },
+                                        0);
+                                });
+                        </script>
+                    }
+                    @if (Model.Warnings.Count > 0)
+                    {
+                        <div class="message-error">
+                            <ul>
+                                @foreach (var warning in Model.Warnings)
+                                {
+                                    <li>@warning</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </form>
+            </div>
+            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.CheckoutConfirmBottom })
+            <div class="section order-summary">
+                @await Component.InvokeAsync("OrderSummary", new { prepareAndDisplayOrderReviewData = true })
+            </div>
+        </div>
+    </div>
+</div>

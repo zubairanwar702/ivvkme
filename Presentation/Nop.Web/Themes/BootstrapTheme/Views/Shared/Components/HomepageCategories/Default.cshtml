@@ -1,0 +1,140 @@
+﻿@model IList<CategoryModel>
+@if (Model.Count > 0)
+{
+    <div class="categoryGrid">
+        @foreach (var item in Model)
+        {
+            <div class="categoryItem card mb-3" id="@item.Id-Kat">
+                <article class="card-banner h-100 bg2 category-card ">
+                    <div class="card-body zoom-wrap  ">
+                        <div class="row no-gutters w-100">
+                            <div class="col-md-11">
+                                <h5 class="title">
+                                    @item.Name
+                                </h5>
+                                @Html.Raw(item.Description)
+                            </div>
+                            <div class="col-md-1">
+                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" class="btn btn-primary">
+                                    @T("homepage.cateogry.button")
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="subListSubCatRWD hidden-xl-up px-0"></ul>
+                </article>
+                <div class="row no-gutters">
+                    <script asp-location="Footer">
+
+                            getSubList('@item.Id');
+
+                            getCategoryContent('@item.Id');
+
+                    </script>
+
+                    @* img + subList *@
+                    <!--<div class="col-md-3">
+                    <article class="card-banner h-100 bg2 category-card">
+                        <div class="card-body zoom-wrap">
+                            <h5 class="title">
+                                @item.Name
+                            </h5>
+                                @Html.Raw(item.Description)
+                            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" class="btn btn-primary">
+                                @T("homepage.cateogry.button")
+                            </a>-->
+                    @*<img class="img-bg zoom-in" alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />*@
+                    <!--</div>-->
+                    @*<ul class="subListSubCatRWD hidden-xl-up px-0"></ul>*@
+                    <!--</article>
+                    </div>-->
+                    @* arr + content + carousel *@
+
+                    <div class="CatFeaturedProd  col-md-12">
+
+                         
+
+                        @* here we load contrent based on ajax request *@
+                        <div class="slider p-3">
+                            <div class="se-pre-con"></div>
+                            <div id="@item.Id-slider" class="swiper-container">
+                                <div class="swiper-wrapper" >
+
+                                </div>
+                            </div>
+                            <div class="@item.Name-next custom-next"><span class="linearicons-chevron-right"></span></div>
+                            <div class="@item.Name-prev custom-prev"><span class="linearicons-chevron-left"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <script type="text/template" class="sliders">
+        ###
+        <figure class="card card-product rounded-0 border-0 mb-0" data-productid="${itId}" id="${itId}">
+            <div class="img-wrap rounded-0">
+                <a class="picture" href="/${SeName}">
+                    <img src="${ImageUrl}" alt="${SeName}">
+                </a>
+            </div>
+            <!--<div class="info-wrap">
+                <h6 class="title">
+                    <a href="/${SeName}">
+                        ${shortName}
+                    </a>
+                </h6>
+                <div class="sku">
+                    ${Sku}
+                </div>
+                <div class="price-wrap">
+                    <span class="price-new">
+                        ${Price}
+                    </span>
+                    <del class="price-old">
+                        ${OldPrice}
+                    </del>
+                </div>
+                <div class="d-inline-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-between w-100">
+                    <div class="product-stars">
+                        <div class="product-rating-box">
+                            <div data-id="rating_${itId}" data-ratsum="${RatingSum}" data-allrev="${TotalReviews}" class="${ratingPercent} rating-container rating_${itId}">
+                                <div class="ratings">
+                                    <div class="rating-box">
+                                        <div class="rating" style="width: 0%">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        @*<div class="count">
+                                <a href="/productreviews/${itId}">
+                                    ${TotalReviews}
+                                    @T("Reviews.Overview.Reviews")
+                                </a>
+                            </div>*@
+                    <!--</div>
+                    <div class="add-to-cart-button">
+                        <button type="button" ${cartAddBtnAction} class="btn btn-sm btn-primary m-0 btn-ajax">
+                            <span class="add-cart-text">@T("ShoppingCart.AddToCart")</span>
+                            <span class="sr-only">cart</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="rest-buttons">
+                    <a class="btn-ajax btn-sm btn-warning" value="Add to compare list" title="Add to compare list" ${compareAddText}>
+                        <span class="lnr linearicons-repeat"></span>
+                        <span class="sr-only">compare</span>
+                    </a>
+                    <a class="btn-ajax btn-sm btn-warning" value="Add to wishlist" title="Add to wishlist" ${wishAddText}>
+                        <span class="lnr linearicons-heart"></span>
+                        <span class="sr-only">wishlist</span>
+                    </a>-->
+                    @*<a class="qv-button btn-ajax"><span class="lnr linearicons-eye"></span></a>*@
+                <!--</div>
+            </div>-->
+        </figure>
+    </script>
+
+}

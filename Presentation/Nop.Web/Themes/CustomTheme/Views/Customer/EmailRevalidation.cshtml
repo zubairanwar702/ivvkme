@@ -1,0 +1,19 @@
+﻿@model EmailRevalidationModel
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.AccountActivation").Text);
+    //page class
+    Html.AppendPageCssClassParts("html-email-revalidation-page");
+}
+<div class="page email-revalidation-page">
+    <div class="page-title">
+        <h2>@T("Account.EmailRevalidation")</h2>
+    </div>
+    <div class="page-body">
+        <div class="result alert alert-success my-3">
+            @Model.Result
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿@model PrivateMessageModel
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    Html.AddTitleParts(T("PageTitle.ViewPM").Text);
+    //page class
+    Html.AppendPageCssClassParts("html-private-messages");
+    Html.AppendPageCssClassParts("html-private-message-view-page");
+}
+<div class="page private-messages private-message-view-page">
+    <div class="page-title">
+        <h2>@T("PrivateMessages.View.ViewMessage")</h2>
+    </div>
+    <div class="page-body">
+        <div class="view-message card">
+            <ul class="message-head card-header">
+                <li class="sender">
+                    <strong>@T("PrivateMessages.View.From")</strong>
+                    <span>@Model.CustomerFromName</span>
+                </li>
+                <li class="recipient">
+                    <strong>@T("PrivateMessages.View.To")</strong>
+                    <span>@Model.CustomerToName</span>
+                </li>
+                <li class="subject">
+                    <strong>@T("PrivateMessages.View.Subject")</strong>
+                    <span>@Model.Subject</span>
+                </li>
+            </ul>
+            <div class="message-body card-body">
+                @Html.Raw(Model.Message)
+            </div>
+        </div>
+        <div class="buttons btn-group my-3">
+            <button type="button" class="btn btn-primary reply-pm-button" onclick="setLocation('@Url.RouteUrl("SendPMReply", new { toCustomerId = Model.FromCustomerId, replyToMessageId = Model.Id })')">
+                @T("PrivateMessages.View.ReplyButton")
+            </button>
+            <button type="button" class="btn btn-danger delete-pm-button" onclick="setLocation('@Url.RouteUrl("DeletePM", new { privateMessageId = Model.Id })')">
+                @T("PrivateMessages.View.DeleteButton")
+            </button>
+            <button type="button" class="btn btn-warning back-pm-button" onclick="setLocation('@Url.RouteUrl("PrivateMessages")')">
+                @T("PrivateMessages.View.BackButton")
+            </button>
+        </div>
+    </div>
+</div>

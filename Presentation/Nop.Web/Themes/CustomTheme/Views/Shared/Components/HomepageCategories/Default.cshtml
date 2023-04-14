@@ -1,0 +1,632 @@
+﻿@model IList<CategoryModel>
+<script type="text/javascript">
+    window.onload = (event) => {
+        LoadSlider();
+     
+    };
+    function LoadSlider() {
+        var mySwiper = new Swiper('.swiper-container', {
+            slidesPerView: 4,
+            //autoplay: {
+            //    delay: 555000,
+            //},
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                350: {
+                    slidesPerView: 1
+                },
+                576: {
+                    slidesPerView: 2
+                },
+                992: {
+                    slidesPerView: 3
+                },
+                1400: {
+                    slidesPerView: 4
+                }
+            }
+        });
+    }
+    
+</script>
+<div class="home-page-slider-outter">
+    <div class="home-page-slider-inner">
+        <div class="swiper-container">
+            <ul class="swiper-wrapper">
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000044_nokia-lumia-1020.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000045_beats-pill-20-wireless-speaker.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000048_portable-sound-speakers.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000032_adobe-photoshop-cs4.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000039_leica-t-mirrorless-digital-camera.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000053_adidas-consortium-campus-80s-running-shoes.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000039_leica-t-mirrorless-digital-camera.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000032_adobe-photoshop-cs4.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000039_leica-t-mirrorless-digital-camera.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000039_leica-t-mirrorless-digital-camera.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000032_adobe-photoshop-cs4.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000045_beats-pill-20-wireless-speaker.jpeg" />
+                        <div class="slider-text">
+                            <div class="slider-product-name">Product Name</div>
+                            <div class="slider-shop-now">Shop Now</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- Add Pagination -->
+        </div>
+        <div class="home-slider-buttons"><div class="swiper-button-next"></div></div>
+        <div class="home-slider-buttons"><div class="swiper-button-prev"></div></div>
+    </div>
+    <div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+<div class="home-page-circle-images-outter">
+    <div class="home-page-circle-image-inner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <a href="#">
+                        <div class="homepage-circle-image">
+                            <img src="~/images/thumbs/0000045_beats-pill-20-wireless-speaker_415.jpeg" />
+                            <div class="home-page-circle-images-text">Product Name</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="homepage-circle-image">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000040_apple-icam_415.jpeg" />
+                            <div class="home-page-circle-images-text">Product Name</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <a href="#">
+                        <div class="homepage-circle-image">
+                            <img src="~/images/thumbs/0000045_beats-pill-20-wireless-speaker_415.jpeg" />
+                            <div class="home-page-circle-images-text">Product Name</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="homepage-circle-image">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000040_apple-icam_415.jpeg" />
+                            <div class="home-page-circle-images-text">Product Name</div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+        </div>
+       
+    
+    <div class="home-page-banner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="left-side-image text-center col-12 col-lg-4">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000041_htc-one-m8-android-l-50-lollipop_415.jpeg" />
+                    </a>
+                </div>
+                <div class="center-text text-center col-12 col-lg-4 ">
+                    <div class="center-text-inner">
+                        <div class="text-message">Some text information here</div>
+                        <a href="#">Shop Now</a>
+                    </div>
+                </div>
+                <div class="right-side-image text-center col-12 col-lg-4">
+                    <a href="#">
+                        <img src="~/images/thumbs/0000042_htc-one-mini-blue_415.jpeg" />
+                    </a>
+                </div>
+            </div>
+
+        </div>
+      
+    </div>
+    <div class="home-page-second-slider-outter">
+        <div class="home-page-second-slider margin-t-30">
+            <div class="swiper-container">
+                <ul class="swiper-wrapper">
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000003_notebooks_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+                        </a>
+
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+                        </a>
+
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+                        </a>
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+                        </a>
+
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+                        </a>
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+                        </a>
+
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                        </a>
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+                        </a>
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                        </a>
+
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+
+                        </a>
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+
+                        </a>
+
+                    </li>
+                    <li class="swiper-slide">
+                        <a href="#">
+                            <img src="~/images/thumbs/0000008_accessories_450.jpg" />
+                            <div class="productName">Product Name</div>
+                            <div class="productDescription">Product Description</div>
+                            <div class="productPrice">product Price</div>
+                        </a>
+
+                    </li>
+                </ul>
+                <!-- Add Pagination -->
+            </div>
+
+        </div>
+        <div class=""><div class="swiper-button-next"></div></div>
+        <div class=""><div class="swiper-button-prev"></div></div>
+    </div>
+    <div class="triangle-down-parent">
+        <div class="triangle-down">
+        </div>
+    </div>
+    
+</div>
+<div class="home-page-section-three">
+    <div class="home-page-section-three-top-triangle">
+    </div>
+    <div class="home-page-section-three-inner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12  col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000026_asus-n551jk-xo076h-laptop.jpeg" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000022_digital-storm-vanquish-3-custom-performance-pc.jpeg" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000033_windows-8-pro.jpeg" />
+                    </div>
+                </div>
+                <div class="col-12  col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000053_adidas-consortium-campus-80s-running-shoes.jpeg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="triangle-down">
+        </div>
+    </div>
+</div>
+<div class="home-page-section-four">
+    <div class="home-page-section-four-inner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="item-box col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000044_nokia-lumia-1020.jpeg" />
+                    </div>
+                </div>
+                <div class="item-box col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000045_beats-pill-20-wireless-speaker.jpeg" />
+                    </div>
+                </div>
+                <div class="item-box col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="/images/thumbs/0000032_adobe-photoshop-cs4.jpeg">
+                    </div>
+                </div>
+                <div class="item-box col-12  col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="home-page-section-five">
+    <div class="home-page-section-five-top-triangle">
+    </div>
+    <div class="home-page-section-five-inner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="item-box col-12  col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                    </div>
+                </div>
+                <div class="item-box col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000027_samsung-series-9-np900x4c-premium-ultrabook.jpeg" />
+                    </div>
+                </div>
+                <div class="item-box col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000034_sound-forge-pro-11-recurring.jpeg" />
+                    </div>
+                </div>
+                <div class="item-box col-12  col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <div class="productName">product Name</div>
+                        <img src="~/images/thumbs/0000074_25-virtual-gift-card.jpeg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="triangle-down">
+        </div>
+    </div>
+</div>
+<div class="home-page-section-six">
+    <div class="home-page-section-six-inner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12  col-md-6 col-lg-3">
+                    <div class="box-shodow">
+
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                        <div class="productName">product Name</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                        <div class="productName">product Name</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                        <div class="productName">product Name</div>
+                    </div>
+                </div>
+                <div class="col-12  col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                        <div class="productName">product Name</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="home-page-section-seven">
+    <div class="home-page-section-seven-inner">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12  col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                        <div class="productName">product Name</div>
+                        <div class="productdescription">product description</div>
+                        <div class="productprice">product price</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                        <div class="productName">product Name</div>
+                        <div class="productdescription">product description</div>
+                        <div class="productprice">product price</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                        <div class="productName">product Name</div>
+                        <div class="productdescription">product description</div>
+                        <div class="productprice">product price</div>
+                    </div>
+                </div>
+                <div class="col-12  col-md-6 col-lg-3">
+                    <div class="box-shodow">
+                        <img src="~/images/thumbs/0000057_nike-tailwind-loose-short-sleeve-running-shirt.jpeg" />
+                        <div class="productName">product Name</div>
+                        <div class="productdescription">product description</div>
+                        <div class="productprice">product price</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="home-page-section-eight">
+    <div class="container-fluid">
+        <div class="home-page-section-eight-toptriangle"></div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <a href="#">
+                    <img src="~/images/thumbs/section-8-image1.png" />
+                </a>
+              
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <a href="#">
+                    <img src="~/images/thumbs/section-8-image2.jpg" />
+                </a>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <a href="#">
+                    <img src="~/images/thumbs/section-8-image1.png" />
+                </a>
+               
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div class="home-page-section-nine">
+    <div class="home-page-section-nine-inner">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-12 col-md-6">
+                  <div class="special-offer-text">
+                      <div class="special-offer">SPECIAL OFFER</div>
+                      <div class="fashion-sale">
+                          <span class="fasion-text">FASHION</span>
+                          <span class="sale-text">SALE</span>
+                      </div>
+                      <div class="off-text">50% off</div>
+                  </div>
+                  
+              </div>
+              <div class="col-12 col-md-6">
+                  <img src="~/images/thumbs/section-9-image1.jpg" />
+              </div>
+
+          </div>
+      </div>
+    </div>
+    
+</div>
+<div class="home-page-section-ten">
+    <div class="home-page-section-ten-inner">
+        <div class="swiper-container">
+            <ul class="swiper-wrapper">
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/footerlog1.png" />
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/footerlog2.png" />
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/footerlog3.png" />
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/footerlog4.png" />
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/footerlog1.png" />
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/footerlog2.png" />
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/footerlog3.png" />
+                    </a>
+                </li>
+                <li class="swiper-slide">
+                    <a href="#">
+                        <img src="~/images/thumbs/footerlog4.png" />
+                    </a>
+                </li>
+            </ul>
+            <!-- Add Pagination -->
+        </div>
+        <div class="home-slider-buttons"><div class="swiper-button-next"></div></div>
+        <div class="home-slider-buttons"><div class="swiper-button-prev"></div></div>
+    </div>
+</div>
+@*<div class="home-page-sectoin-eleven">
+    <div class="home-page-section-eleven-toptriangle"></div>
+    <div class="home-page-sectoin-eleven-inner">
+        Some infromation here
+    </div>
+
+</div>*@

@@ -1,0 +1,116 @@
+﻿@model ProductOverviewModel
+@using Nop.Core
+@using Nop.Core.Domain.Catalog
+@using Nop.Core.Domain.Orders
+@using Nop.Core.Domain.Tax
+@inject CatalogSettings catalogSettings
+@inject IWorkContext workContext
+@{
+    //prepare "Add to cart" AJAX link
+    var addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+    }
+
+    var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+    var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
+}
+<div class="card card-product rounded-0 border-0 mb-0" data-productid="@Model.Id">
+    <div class="img-wrap rounded-0">
+        <a class="picture" href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+            <img class="lazyload" alt="@Model.DefaultPictureModel.AlternateText" data-src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
+        </a>
+    </div>
+    <div class="info-wrap">
+        <h6 class="title">
+            <a href="@Url.RouteUrl("Product", new {SeName = Model.SeName})">@Model.Name</a>
+        </h6>
+        @if (catalogSettings.ShowSkuOnCatalogPages && !string.IsNullOrEmpty(Model.Sku))
+        {
+            <div class="sku">
+                @Model.Sku
+            </div>
+        }
+        <div class="add-info">
+            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoBefore, additionalData = Model })
+            <div class="price-wrap">
+                <span class="price price-new">@Model.ProductPrice.Price</span>
+                @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                {
+                    <del class="price price-old">@Model.ProductPrice.OldPrice</del>
+                }
+                @if (Model.ProductPrice.DisplayTaxShippingInfo)
+                {
+                    var inclTax = workContext.TaxDisplayType == TaxDisplayType.IncludingTax;
+                    //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
+                    //of course, you can modify appropriate locales to include VAT info there
+                    <span class="tax-shipping-info">
+                        @T(inclTax ? "Products.Price.TaxShipping.InclTax" : "Products.Price.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+                    </span>
+                }
+                @if (!string.IsNullOrEmpty(Model.ProductPrice.BasePricePAngV))
+                {
+                    <div class="base-price-pangv">
+                        @Model.ProductPrice.BasePricePAngV
+                    </div>
+                }
+            </div>
+            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoMiddle, additionalData = Model })
+            <div class="rest-buttons">
+                @if (!Model.ProductPrice.DisableAddToCompareListButton)
+                {
+                    <button type="button" title="@T("ShoppingCart.AddToCompareList")" class="btn btn-sm btn-warning add-to-compare-list-button" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;">
+                        <span class="lnr linearicons-repeat"></span>
+                    </button>
+                }
+                @if (!Model.ProductPrice.DisableWishlistButton)
+                {
+                    <button type="button" title="@T("ShoppingCart.AddToWishlist")" class="btn btn-sm btn-warning add-to-wishlist-button" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;">
+                        <span class="lnr linearicons-heart"></span>
+                    </button>
+                }
+            </div>
+            @await Component.InvokeAsync("Widget", new { widgetZone = PublicWidgetZones.ProductBoxAddinfoAfter, additionalData = Model })
+        </div>
+        <div class="d-inline-flex flex-md-row flex-column align-items-md-center align-items-start justify-content-between w-100">
+            @if (Model.ReviewOverviewModel.AllowCustomerReviews)
+            {
+                var ratingPercent = 0;
+                if (Model.ReviewOverviewModel.TotalReviews != 0)
+                {
+                    ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5;
+                }
+                <div class="product-rating-box" title="@string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)">
+                    <div class="ratings">
+                        <div class="rating-box">
+                            <div class="rating" style="width: @(ratingPercent)%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (!Model.ProductPrice.DisableBuyButton)
+            {
+                var addToCartText = T("ShoppingCart.AddToCart").Text;
+                if (Model.ProductPrice.IsRental)
+                {
+                    addToCartText = T("ShoppingCart.Rent").Text;
+                }
+                if (Model.ProductPrice.AvailableForPreOrder)
+                {
+                    addToCartText = T("ShoppingCart.PreOrder").Text;
+                }
+                <button type="button" class="btn btn-sm btn-primary product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">
+                    <span>@T("ShoppingCart.AddToCart")</span>
+                </button>
+            }
+        </div>
+    </div>
+</div>
